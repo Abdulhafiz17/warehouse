@@ -1,14 +1,22 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
+  state() {
+    return { loading: false };
   },
   actions: {
+    setloading(ctx, loading) {
+      ctx.commit("setloading", loading);
+    },
   },
-  modules: {
-  }
-})
+  mutations: {
+    setloading(state, loading) {
+      state.loading = loading;
+    },
+  },
+  getters: {
+    loading(state) {
+      return state.loading;
+    },
+  },
+});

@@ -1,0 +1,15 @@
+:root {
+  --color: whitesmoke;
+  --background: rgb(40, 40, 40);
+}
+
+.dark {
+  color: var(--color);
+  background-color: var(--background);
+}
+
+.dark #app,
+.dark #app > * {
+  color: var(--color);
+  background-color: var(--background);
+}
