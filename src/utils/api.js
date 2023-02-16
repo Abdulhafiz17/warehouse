@@ -152,6 +152,20 @@ export function updateMarket(data) {
   return api(`update_market`, `PUT`, data);
 }
 
+// shop
+
+export function shops(search, page, limit) {
+  let search_query = ``;
+  if (search) search_query = `search=${search}$`;
+  return api(`get_shops?${search_query}page=${page}&limit=${limit}`, "get");
+}
+export function createShop(data) {
+  return api(`create_shop`, "post", data);
+}
+export function updateShop(data) {
+  return api(`update_shop`, "put", data);
+}
+
 // category
 
 export function categories(search, page, limit) {

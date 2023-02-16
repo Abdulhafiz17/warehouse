@@ -224,7 +224,7 @@
             <div class="row">
               <div class="col-6">
                 <label>
-                  Foydaanuvchi nomi
+                  Foydalanuvchi nomi
                   <input
                     type="text"
                     color="green"

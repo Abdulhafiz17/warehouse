@@ -29,11 +29,11 @@ export default {
           icon: "fa-truck-loading",
           title: "Ta'minotchilar",
         },
-        // {
-        //   path: "/mijozlar",
-        //   icon: "fa-handshake",
-        //   title: "Mijozlar",
-        // },
+        {
+          path: "/mijozlar",
+          icon: "fa-handshake",
+          title: "Mijozlar",
+        },
         {
           path: "/hodimlar",
           icon: "fa-users",
