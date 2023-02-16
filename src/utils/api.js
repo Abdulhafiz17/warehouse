@@ -165,6 +165,42 @@ export function createShop(data) {
 export function updateShop(data) {
   return api(`update_shop`, "put", data);
 }
+export function takeMoneyFromShop(data) {
+  return api(`take_money_from_shop`, "post", data);
+}
+
+// order
+
+export function orders(shop_id, user_id, status, page, limit) {
+  return api(
+    `get_orders?shop_id=${shop_id}&user_id=${user_id}&status=${status}&page=${page}&limit=${limit}`,
+    "get"
+  );
+}
+export function createOrder(data) {
+  return api(`create_order`, "post", data);
+}
+export function removeOrder(data) {
+  return api("remove_order", "delete", data);
+}
+export function confirmationOrder(data) {
+  return api(`confirmation_order`, "put", data);
+}
+
+// trade
+
+export function trades(order_id, page, limit) {
+  return api(
+    `get_trades?order_id=${order_id}&page=${page}&limit=${limit}`,
+    "get"
+  );
+}
+export function toTrade(data) {
+  return api("to_trade", "post", data);
+}
+export function removeTrade(trade_id) {
+  return api(`remove_trade/${trade_id}`, "delete");
+}
 
 // category
 

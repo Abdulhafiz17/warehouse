@@ -6,6 +6,7 @@ import VWave from "v-wave";
 import card from "./components/card/card.vue";
 import btn from "./components/btn/btn.vue";
 import tabs from "./components/tabs/tabs.vue";
+import collapse from "./components/collapse/collapse.vue";
 import modal from "./components/modal/modal.vue";
 
 createApp(App)
@@ -15,5 +16,6 @@ createApp(App)
   .component("card", card)
   .component("btn", btn)
   .component("tabs", tabs)
+  .component("collapse", collapse)
   .component("modal", modal)
   .mount("#app");

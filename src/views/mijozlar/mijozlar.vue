@@ -47,6 +47,16 @@
               <span class="material-symbols-outlined"> location_on </span>
               <span>{{ item.address }}</span>
             </li>
+            <li>
+              <i class="fa fa-coins"></i>
+              <span>
+                <span v-for="item2 in item.balances" :key="item">
+                  {{ _.format(item2.balance) + " " + item2.currency.currency }}
+                  <br />
+                </span>
+                <span v-if="!item.balances.length">0</span>
+              </span>
+            </li>
           </ul>
           <div class="row my-1">
             <div class="col">
@@ -55,6 +65,16 @@
                   <i class="fa fa-box"></i>
                 </btn>
               </router-link>
+            </div>
+            <div class="col">
+              <btn
+                block="true"
+                data-toggle="modal"
+                data-target="#pay"
+                @click="pay.source = item.id"
+              >
+                <i class="fa fa-coins"></i>
+              </btn>
             </div>
             <div class="col">
               <btn
@@ -203,6 +223,61 @@
       ></btn>
     </template>
   </modal>
+
+  <modal id="pay">
+    <template #header> Mijozdan pul olish </template>
+    <template #body>
+      <form id="pay-form" @submit.prevent="payFromShop(pay)">
+        <div class="row gap-1">
+          <div class="col-12">
+            <div class="input-group">
+              <input
+                type="number"
+                min="0"
+                step="any"
+                placeholder="summa"
+                required
+                color="green"
+                class="form-control"
+                v-model="pay.money"
+              />
+              <div class="input-group-append">
+                <select
+                  color="green"
+                  class="form-select"
+                  v-model="pay.currency_id"
+                >
+                  <option
+                    v-for="item in currencies"
+                    :key="item"
+                    :value="item.id"
+                  >
+                    {{ item.currency }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <textarea
+              cols="30"
+              rows="2"
+              placeholder="izoh"
+              color="green"
+              class="form-control"
+              v-model="pay.comment"
+            ></textarea>
+          </div>
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <btn form="pay-form"><i class="far fa-circle-check"></i></btn>
+      <btn color="red" data-dismiss="modal" close-pay
+        ><i class="far fa-circle-xmark"></i
+      ></btn>
+    </template>
+  </modal>
 </template>
 
 <script>
@@ -213,6 +288,7 @@ export default {
   components: { pagination },
   data() {
     return {
+      _: Intl.NumberFormat(),
       search: "",
       shops: { current_page: 0, pages: 0, limit: 25, data: [] },
       add: {
@@ -226,6 +302,13 @@ export default {
         address: "",
         phone: "",
       },
+      currencies: [],
+      pay: {
+        money: null,
+        currency_id: null,
+        source: null,
+        comment: "",
+      },
     };
   },
   created() {
@@ -235,6 +318,12 @@ export default {
     get(page, limit) {
       api.shops(this.search, page, limit).then((val) => {
         this.shops = val;
+        this.getCurrencies();
+      });
+    },
+    getCurrencies() {
+      api.currencies().then((val) => {
+        this.currencies = val;
       });
     },
     postShop(shop) {
@@ -247,6 +336,19 @@ export default {
     putShop(shop) {
       api.updateShop(shop).then((val) => {
         api.success("close-edit-shop").then(() => {
+          this.get(0, 25);
+        });
+      });
+    },
+    payFromShop(data) {
+      api.takeMoneyFromShop(data).then((val) => {
+        api.success("close-pay").then(() => {
+          this.pay = {
+            money: null,
+            currency_id: null,
+            source: null,
+            comment: "",
+          };
           this.get(0, 25);
         });
       });

@@ -188,6 +188,7 @@ export default {
       api.warehouses(this.search).then((val) => {
         this.warehouses = val;
         if (this.creatable?.length) {
+          this.creatable = null;
           localStorage.removeItem("скуфефиду");
         }
       });

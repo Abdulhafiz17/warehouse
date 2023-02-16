@@ -51,66 +51,43 @@
   </form>
   <div class="responsive-y mt-1" style="height: 80vh">
     <div class="row gap-1">
-      <div class="col-12" v-for="item in brands?.data">
-        <form @submit.prevent="putBrand(item)">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              color="green"
-              placeholder="yangi brend"
-              required
-              v-model="item.name"
-            />
-            <div class="dropdown">
-              <btn
-                class="dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                color="green"
-              >
-                {{
-                  item.category_id
-                    ? categories?.data.find(({ id }) => id == item.category_id)
-                        .name
-                    : "Kategoriya"
-                }}
-              </btn>
-              <div
-                class="dropdown-menu responsive-y"
-                style="max-height: 20vh"
-                aria-labelledby="dropdownMenuButton"
-                categories-dropdown
-                @scroll="scrollCategories()"
-              >
-                <ul>
-                  <li
-                    v-for="item2 in categories?.data"
-                    @click="item.category_id = item2.id"
-                  >
-                    {{ item2.name }}
-                  </li>
-                </ul>
+      <div class="col-12" v-for="item in categories.data" :key="item">
+        <collapse @click="get(0, 25, item)">
+          <template #header>
+            {{ item.name }}
+          </template>
+          <template #body>
+            <div class="row gap-1">
+              <div class="col-12" v-for="item2 in item.brands?.data">
+                <form @submit.prevent="putBrand(item2)">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      color="green"
+                      placeholder="yangi brend"
+                      required
+                      v-model="item2.name"
+                    />
+                    <div class="input-group-append">
+                      <btn color="yellow">
+                        <i class="fa fa-edit"></i>
+                      </btn>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-12">
+                <pagination
+                  :page="item.brands?.current_page"
+                  :pages="item.brands?.pages"
+                  :limit="item.brands?.limit"
+                  @get="get"
+                />
               </div>
             </div>
-            <div class="input-group-append">
-              <btn color="yellow">
-                <i class="fa fa-edit"></i>
-              </btn>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-12">
-        <pagination
-          :page="brands?.current_page"
-          :pages="brands?.pages"
-          :limit="brands?.limit"
-          @get="get"
-        />
+          </template>
+        </collapse>
       </div>
     </div>
   </div>
@@ -124,7 +101,6 @@ export default {
   components: { pagination },
   data() {
     return {
-      brands: null,
       categories: { current_page: 0, pages: 1, limit: 25, data: [] },
       add: { name: "", category_id: 0 },
     };
@@ -136,12 +112,14 @@ export default {
     getCategories(page, limit) {
       api.categories("", page, limit).then((val) => {
         this.categories = val;
-        this.get(page, limit);
+        this.categories.data.forEach((item) => {
+          item.brands = null;
+        });
       });
     },
-    get(page, limit) {
-      api.brands("", 0, page, limit).then((val) => {
-        this.brands = val;
+    get(page, limit, data) {
+      api.brands("", data.id, page, limit).then((val) => {
+        data.brands = val;
       });
     },
     postBrand(brand) {
@@ -149,14 +127,14 @@ export default {
         api.success().then(() => {
           this.add.name = "";
           this.add.category_id = 0;
-          this.get(0, 25);
+          this.getCategories(0, 25);
         });
       });
     },
     putBrand(brand) {
       api.updateBrand(brand).then((val) => {
         api.success().then(() => {
-          this.get(0, 25);
+          this.getCategories(0, 25);
         });
       });
     },

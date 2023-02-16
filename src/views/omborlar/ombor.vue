@@ -33,6 +33,7 @@
           <th>Qoldiq</th>
           <th>Narx</th>
           <th>Tan narx</th>
+          <th>Sotuv narx</th>
         </tr>
       </thead>
       <tbody>
@@ -46,12 +47,31 @@
               )
             }}
           </td>
-          <td>{{ item.brand.category.name }}</td>
-          <td>{{ item.brand.name }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.quantity + " dona" }}</td>
-          <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
-          <td>{{ _.format(item.tan_narx) + " " + item.currency.currency }}</td>
+          <td>{{ item.Warehouse_products.brand.category.name }}</td>
+          <td>{{ item.Warehouse_products.brand.name }}</td>
+          <td>{{ item.Warehouse_products.name }}</td>
+          <td>{{ item.Warehouse_products.quantity + " dona" }}</td>
+          <td>
+            {{
+              _.format(item.Warehouse_products.price) +
+              " " +
+              item.Warehouse_products.currency.currency
+            }}
+          </td>
+          <td>
+            {{
+              _.format(item.Warehouse_products.tan_narx) +
+              " " +
+              item.tan_narx_currency
+            }}
+          </td>
+          <td>
+            {{
+              _.format(item.Warehouse_products.trade_price) +
+              " " +
+              item.trade_currency
+            }}
+          </td>
         </tr>
       </tbody>
       <tfoot>

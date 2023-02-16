@@ -50,10 +50,20 @@ pre {
   color: var(--cyan);
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 10px;
+}
+
 /* responsive */
 
 .responsive-y {
-  padding: 0 5px 15px 5px;
+  padding: 0 4px 15px 5px;
   overflow-y: auto;
   overflow-x: hidden;
 }
