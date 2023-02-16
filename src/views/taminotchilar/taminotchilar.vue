@@ -47,6 +47,18 @@
               <span class="material-symbols-outlined"> location_on </span>
               <span>{{ item.address }}</span>
             </li>
+            <li>
+              <i class="fa fa-coins"></i>
+              <span>
+                <span v-for="item2 in item.balances" :key="item2">
+                  {{
+                    _.format(item2?.balance) + " " + item2?.currency?.currency
+                  }}
+                  <br />
+                </span>
+                <span v-if="!item.balances?.length">0</span>
+              </span>
+            </li>
           </ul>
           <div class="row my-1">
             <div class="col">
@@ -278,6 +290,7 @@ export default {
   components: { pagination },
   data() {
     return {
+      _: Intl.NumberFormat(),
       search: "",
       status: true,
       markets: { current_page: 0, pages: 0, limit: 25, data: [] },

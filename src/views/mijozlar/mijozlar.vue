@@ -50,7 +50,7 @@
             <li>
               <i class="fa fa-coins"></i>
               <span>
-                <span v-for="item2 in item.balances" :key="item">
+                <span v-for="item2 in item.balances" :key="item2">
                   {{ _.format(item2.balance) + " " + item2.currency.currency }}
                   <br />
                 </span>
