@@ -20,6 +20,11 @@ export default {
       links: [
         { path: "/omborlar", icon: "fa-warehouse", title: "Omborlar" },
         {
+          path: "/taminotlar",
+          icon: "fa-truck",
+          title: "Ta'minotlar",
+        },
+        {
           path: "/taminotchilar",
           icon: "fa-truck-loading",
           title: "Ta'minotchilar",

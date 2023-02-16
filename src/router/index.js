@@ -51,6 +51,18 @@ const routes = [
     component: () => import("../views/taminotchilar/taminotchilar.vue"),
   },
   {
+    path: "/taminotlar",
+    name: "taminotlar",
+    beforeEnter: auth,
+    component: () => import("../views/taminotlar/taminotlar.vue"),
+  },
+  {
+    path: "/taminot/:id",
+    name: "taminot",
+    beforeEnter: auth,
+    component: () => import("../views/taminotlar/taminot.vue"),
+  },
+  {
     path: "/setting",
     name: "setting",
     beforeEnter: auth,

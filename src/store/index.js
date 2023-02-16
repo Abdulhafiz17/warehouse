@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+let timeout = null;
 
 export default createStore({
   state() {
@@ -11,7 +12,14 @@ export default createStore({
   },
   mutations: {
     setloading(state, loading) {
-      state.loading = loading;
+      clearTimeout(timeout);
+      if (loading) {
+        timeout = setTimeout(() => {
+          state.loading = loading;
+        }, 200);
+      } else {
+        state.loading = loading;
+      }
     },
   },
   getters: {

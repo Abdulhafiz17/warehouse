@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     getCategories(page, limit) {
-      api.cateogries("", page, limit).then((val) => {
+      api.categories("", page, limit).then((val) => {
         this.categories = val;
         this.get(page, limit);
       });
@@ -165,7 +165,7 @@ export default {
       if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
         if (this.categories?.current_page < this.categories?.pages - 1) {
           api
-            .cateogries("", this.categories?.current_page + 1, 25)
+            .categories("", this.categories?.current_page + 1, 25)
             .then((val) => {
               this.categories.data = this.categories.data.concat(val.data);
             });

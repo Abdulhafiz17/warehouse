@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     get(page, limit) {
-      api.cateogries("", page, limit).then((val) => {
+      api.categories("", page, limit).then((val) => {
         this.categories = val;
       });
     },

@@ -154,7 +154,7 @@ export function updateMarket(data) {
 
 // category
 
-export function cateogries(search, page, limit) {
+export function categories(search, page, limit) {
   let search_query = ``;
   if (search) search_query = `search=${search}&`;
   return api(
@@ -202,4 +202,40 @@ export function updateCurrency(data) {
 
 export function payForMarket(data) {
   return api(`pay_for_market_expense`, `POST`, data);
+}
+export function payForPartyExpense(data) {
+  return api(`pay_for_party_expense`, `POST`, data);
+}
+export function partyExpenses(party_id, page, limit) {
+  return api(
+    `get_party_expenses/${party_id}?page=${page}&limit=${limit}`,
+    "get"
+  );
+}
+
+// party
+
+export function parties(status, page, limit) {
+  return api(`get_parties?status=${status}&page=${page}&limit=${limit}`, "get");
+}
+export function createParty() {
+  return api(`create_party`, "post");
+}
+export function confirmationParty(data) {
+  return api(`confirmation_party`, "put", data);
+}
+
+// supply
+
+export function supplies(market_id, party_id, page, limit) {
+  return api(
+    `get_supplies?market_id=${market_id}&party_id=${party_id}&page=${page}&limit=${limit}`,
+    "get"
+  );
+}
+export function takeSupply(data) {
+  return api(`take_supply`, "post", data);
+}
+export function removeSupply(supply_id) {
+  return api(`remove_supply/${supply_id}`, "delete");
 }
