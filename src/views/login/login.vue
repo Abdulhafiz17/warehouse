@@ -1,7 +1,9 @@
 <template>
   <div class="container-fluid">
-    <card color="green" class="w-25">
-      <Logo />
+    <card color="green">
+      <div class="card-img">
+        <img src="../../assets/rotate.png" alt="logo" />
+      </div>
       <form @submit.prevent="login()">
         <div class="row my-2 gap-2">
           <div class="col-12">
@@ -71,5 +73,26 @@ export default {
   justify-content: center;
   width: 100%;
   height: calc(100vh - 30px);
+}
+
+.CARD {
+  width: 30%;
+}
+
+@media (max-width: 768px) {
+  .CARD {
+    width: 40%;
+  }
+}
+
+@media (max-width: 425px) {
+  .CARD {
+    width: 70%;
+  }
+}
+
+img {
+  width: 80%;
+  object-fit: contain;
 }
 </style>

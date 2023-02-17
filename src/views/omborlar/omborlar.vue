@@ -3,11 +3,11 @@
     <div class="col-12">
       <card color="green">
         <div class="row">
-          <div class="col-4 text-start">
+          <div class="col-md-4 text-start">
             <h3>Omborlar</h3>
           </div>
-          <div class="col-4" v-if="!creatable?.length"></div>
-          <div class="col-4">
+          <div class="col-md-4" v-if="!creatable"></div>
+          <div class="col-md-4">
             <input
               type="search"
               placeholder="qidiruv"
@@ -17,7 +17,7 @@
               @keyup="get(0, 25)"
             />
           </div>
-          <div class="col-4" v-if="creatable?.length">
+          <div class="col-md-4" v-if="creatable">
             <btn
               color="green"
               block="true"
@@ -165,7 +165,6 @@ export default {
   name: "omborlar",
   data() {
     return {
-      creatable: localStorage.getItem("скуфефиду"),
       search: "",
       status: true,
       warehouses: [],
@@ -180,6 +179,11 @@ export default {
       },
     };
   },
+  computed: {
+    creatable() {
+      return this.warehouses.length ? false : true;
+    },
+  },
   created() {
     this.get();
   },
@@ -187,10 +191,6 @@ export default {
     get() {
       api.warehouses(this.search).then((val) => {
         this.warehouses = val;
-        if (this.creatable?.length) {
-          this.creatable = null;
-          localStorage.removeItem("скуфефиду");
-        }
       });
     },
     postWarehouse(warehouse) {

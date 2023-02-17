@@ -57,10 +57,22 @@ const routes = [
     component: () => import("../views/mijozlar/mijoz.vue"),
   },
   {
+    path: "/mijozTarix/:id",
+    name: "mijozTarix",
+    beforeEnter: auth,
+    component: () => import("../views/mijozlar/mijozTarix.vue"),
+  },
+  {
     path: "/taminotchilar",
     name: "taminotchilar",
     beforeEnter: auth,
     component: () => import("../views/taminotchilar/taminotchilar.vue"),
+  },
+  {
+    path: "/taminotchi/:id",
+    name: "taminotchi",
+    beforeEnter: auth,
+    component: () => import("../views/taminotchilar/taminotchi.vue"),
   },
   {
     path: "/taminotlar",

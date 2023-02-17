@@ -44,6 +44,11 @@ export default {
           icon: "fa-tools",
           title: "Sozlamalar",
         },
+        {
+          path: "/",
+          icon: "fa-sign-out",
+          title: "Chiqish",
+        },
       ],
     };
   },

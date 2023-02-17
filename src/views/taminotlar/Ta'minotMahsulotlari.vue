@@ -9,68 +9,70 @@
 
   <div
     class="responsive-y mt-2"
-    :style="`height: ${supply_status == 'false' ? '66vh' : '73vh'}`"
+    :style="`height: ${supply_status == 'false' ? '60vh' : '65vh'}`"
   >
-    <table class="table table-sm table-hover">
-      <thead>
-        <tr>
-          <th>Ta'minotchi</th>
-          <th>Kategoriya</th>
-          <th>Brend</th>
-          <th>Nomi</th>
-          <th>Miqdor</th>
-          <th>Narx</th>
-          <th>Summa</th>
-          <th>
-            <btn color="cyan" data-toggle="modal" data-target="#filter">
-              <i class="fa fa-filter" />
-            </btn>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in supplies" :key="item">
-          <td>{{ item.market.name }}</td>
-          <td>{{ item.brand.category.name }}</td>
-          <td>{{ item.brand.name }}</td>
-          <td>
-            {{ item.name }}
-          </td>
-          <td>
-            {{ item.quantity + " dona" }}
-          </td>
-          <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
-          <td>
-            {{
-              _.format(item.price * item.quantity) +
-              " " +
-              item.currency.currency
-            }}
-          </td>
-          <td>
-            <btn
-              color="red"
-              @click="deleteSupply(item.id)"
-              v-if="supply_status == 'false'"
-            >
-              <i class="far fa-circle-xmark" />
-            </btn>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="8">
-            <Pagination
-              :page="supplies_page"
-              :pages="supplies_pages"
-              :limit="supplies_limit"
-              @get="getSupplies"
-            />
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Ta'minotchi</th>
+            <th>Kategoriya</th>
+            <th>Brend</th>
+            <th>Nomi</th>
+            <th>Miqdor</th>
+            <th>Narx</th>
+            <th>Summa</th>
+            <th>
+              <btn color="cyan" data-toggle="modal" data-target="#filter">
+                <i class="fa fa-filter" />
+              </btn>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in supplies" :key="item">
+            <td>{{ item.market.name }}</td>
+            <td>{{ item.brand.category.name }}</td>
+            <td>{{ item.brand.name }}</td>
+            <td>
+              {{ item.name }}
+            </td>
+            <td>
+              {{ item.quantity + " dona" }}
+            </td>
+            <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
+            <td>
+              {{
+                _.format(item.price * item.quantity) +
+                " " +
+                item.currency.currency
+              }}
+            </td>
+            <td>
+              <btn
+                color="red"
+                @click="deleteSupply(item.id)"
+                v-if="supply_status == 'false'"
+              >
+                <i class="far fa-circle-xmark" />
+              </btn>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <Pagination
+                :page="supplies_page"
+                :pages="supplies_pages"
+                :limit="supplies_limit"
+                @get="getSupplies"
+              />
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 
   <modal id="addProduct">
@@ -355,7 +357,7 @@ import * as api from "../../utils/api";
 import Pagination from "../../components/pagination/pagination.vue";
 export default {
   name: "Products",
-  emits: ["setloading", "getBalance"],
+  emits: ["getBalance"],
   components: { Pagination },
   data() {
     return {

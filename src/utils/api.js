@@ -177,6 +177,9 @@ export function orders(shop_id, user_id, status, page, limit) {
     "get"
   );
 }
+export function orderBalance(order_id) {
+  return api(`get_order_balances/${order_id}`, "get");
+}
 export function createOrder(data) {
   return api(`create_order`, "post", data);
 }
@@ -253,6 +256,15 @@ export function updateCurrency(data) {
 export function payForMarket(data) {
   return api(`pay_for_market_expense`, `POST`, data);
 }
+export function marketExpenses(market_id, from_time, to_time, page, limit) {
+  let time_query = ``;
+  if (from_time && to_time)
+    time_query = `from_time=${from_time}&to_time=${to_time}&`;
+  return api(
+    `get_market_expenses/${market_id}?${time_query}page=${page}&limit=${limit}`,
+    "get"
+  );
+}
 export function payForPartyExpense(data) {
   return api(`pay_for_party_expense`, `POST`, data);
 }
@@ -273,6 +285,9 @@ export function createParty() {
 }
 export function confirmationParty(data) {
   return api(`confirmation_party`, "put", data);
+}
+export function partyBalance(party_id) {
+  return api(`get_party_balance/${party_id}`, "get");
 }
 
 // supply

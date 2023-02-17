@@ -3,10 +3,10 @@
     <div class="col-12">
       <card color="green">
         <div class="row">
-          <div class="col-4 text-start">
+          <div class="col-md-4 text-start">
             <h3>Mijozlar</h3>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <input
               type="search"
               placeholder="qidiruv"
@@ -16,7 +16,7 @@
               @keyup="get(0, 25)"
             />
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <btn
               color="green"
               block="true"
@@ -37,7 +37,7 @@
           <ul>
             <li>
               <span class="material-symbols-outlined"> person </span>
-              <span>{{ item.name }}</span>
+              <strong>{{ item.name }}</strong>
             </li>
             <li>
               <span class="material-symbols-outlined"> call </span>
@@ -50,15 +50,32 @@
             <li>
               <i class="fa fa-coins"></i>
               <span>
-                <span v-for="item2 in item.balances" :key="item2">
+                <strong
+                  v-for="item2 in item.balances"
+                  :key="item2"
+                  :class="
+                    item2.balance > 0
+                      ? 'text-success'
+                      : item2.balance < 0
+                      ? 'text-danger'
+                      : ''
+                  "
+                >
                   {{ _.format(item2.balance) + " " + item2.currency.currency }}
                   <br />
-                </span>
+                </strong>
                 <span v-if="!item.balances.length">0</span>
               </span>
             </li>
           </ul>
           <div class="row my-1">
+            <div class="col">
+              <!-- <router-link :to="`/mijozTarix/${item.id}`"> -->
+              <btn block="true" color="cyan">
+                <i class="fa fa-history"></i>
+              </btn>
+              <!-- </router-link> -->
+            </div>
             <div class="col">
               <router-link :to="`/mijoz/${item.id}`">
                 <btn color="green" block="true">

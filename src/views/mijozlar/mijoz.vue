@@ -3,23 +3,23 @@
     <div class="col-12">
       <card color="green">
         <div class="row">
-          <div class="col-4 text-start">
+          <div class="col-md-4 text-start">
             <h3>Mijoz bilan savdo</h3>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <btn block="true" @click="addOrder()" v-if="!order">
               Buyurtma ochish
             </btn>
-            <div class="btn-group" v-else-if="order">
+            <div class="btn-group w-100" v-else-if="order">
               <btn block="true" color="green" @click="confirmOrder()">
                 Tasdiqlash
               </btn>
               <btn block="true" color="red" @click="deleteOrder()">
-                Yakunlash
+                Bekor qilish
               </btn>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <select
               class="form-select"
               color="green"
@@ -109,7 +109,16 @@
     <div class="col-md-6">
       <card color="green">
         <div class="row gap-1">
-          <div class="col-12 responsive-y" style="max-height: 76vh">
+          <div class="col-12">
+            <p>
+              <h5>
+                <span v-for="item in balance" :key="item">
+                  {{ _.format(item.sum_price) + " " + item.currency + " " }}
+                </span>
+              </h5>
+            </p>
+          </div>
+          <div class="col-12 responsive-y" style="max-height: 70vh">
             <ul>
               <li v-for="item in trades?.data" :key="item">
                 <span>
@@ -235,6 +244,7 @@ export default {
       _: Intl.NumberFormat(),
       orders: [],
       order: null,
+      balance: [],
       warehouses: [],
       warehouse_id: 0,
       search: "",
@@ -263,8 +273,13 @@ export default {
         this.orders = val.data;
         this.order = val.data[0];
         if (this.order) {
-          this.getWarehouses();
+        this.getWarehouses();
         }
+      });
+    },
+    getBalance() {
+      api.orderBalance(this.order.id).then((val) => {
+        this.balance = val;
       });
     },
     addOrder() {
@@ -313,6 +328,7 @@ export default {
     getTrades(page, limit) {
       api.trades(this.order.id, page, limit).then((val) => {
         this.trades = val;
+        this.getBalance();
       });
     },
     addTrade() {

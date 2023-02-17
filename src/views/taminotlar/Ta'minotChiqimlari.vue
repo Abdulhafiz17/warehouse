@@ -75,7 +75,7 @@
   </div>
   <div
     class="responsive-y mt-2"
-    :style="`height: ${supply_status == 'false' ? '66vh' : '73vh'}`"
+    :style="`height: ${supply_status == 'false' ? '60vh' : '65vh'}`"
   >
     <ul>
       <li v-for="item in expenses" :key="item">
@@ -101,7 +101,7 @@ import * as api from "../../utils/api";
 import Pagination from "../../components/pagination/pagination.vue";
 export default {
   name: "Expenses",
-  emits: ["setloading", "getBalance"],
+  emits: ["getBalance"],
   components: { Pagination },
   data() {
     return {

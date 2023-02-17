@@ -3,10 +3,10 @@
     <div class="col-12">
       <card color="green">
         <div class="row">
-          <div class="col-4 text-start">
+          <div class="col-md-4 text-start">
             <h3>Hodimlar</h3>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <input
               type="search"
               placeholder="qidiruv"
@@ -16,7 +16,7 @@
               @keyup="get(0, 25)"
             />
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <btn
               color="green"
               block="true"

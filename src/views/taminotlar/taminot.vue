@@ -1,23 +1,42 @@
 <template>
-  <div class="row mb-1">
+  <div class="row gap-1 mb-1">
     <div class="col-12">
       <card color="green">
         <div class="row">
-          <div class="col-4 text-start">
+          <div class="col-md-4 text-start">
             <h3>Ta'minot id: {{ $route.params.id }}</h3>
           </div>
-          <div class="col-4"></div>
-          <div class="col-4">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
             <btn
               color="green"
               block="true"
               data-toggle="modal"
               data-target="#confirm"
+              v-if="supply_status == 'false'"
             >
               Ta'minotni yakunlash
             </btn>
           </div>
         </div>
+      </card>
+    </div>
+    <div class="col-12">
+      <card color="green">
+        <li>
+          <span>
+            Ta'minot summasi:
+            <strong v-for="item in balance.total_supply_price" :key="item">{{
+              _.format(item.total_supply_price) + " " + item.currency + " "
+            }}</strong>
+          </span>
+          <span>
+            Chiqim summasi:
+            <strong v-for="item in balance.total_expence_price" :key="item">{{
+              _.format(item.total_expence_price) + " " + item.currency + " "
+            }}</strong>
+          </span>
+        </li>
       </card>
     </div>
   </div>
@@ -26,10 +45,10 @@
     :slots="[`products`, `expenses`]"
   >
     <template #products>
-      <Products @setloading="setloading" />
+      <Products @getBalance="getBalance" />
     </template>
     <template #expenses>
-      <Expenses @setloading="setloading" />
+      <Expenses @getBalance="getBalance" />
     </template>
   </tabs>
 
@@ -118,14 +137,15 @@ import Products from "./Ta'minotMahsulotlari.vue";
 import Expenses from "./Ta'minotChiqimlari.vue";
 export default {
   name: "taminot",
-  emits: ["setloading"],
   components: { Products, Expenses },
   data() {
     return {
       _: Intl.NumberFormat(),
       supply_status: localStorage.getItem("supply_status"),
-      total_price: [],
-      total_expense: [],
+      balance: {
+        total_supply_price: [],
+        total_expence_price: [],
+      },
       currencies: [],
       currency_id: "",
       warehouses: [],
@@ -138,8 +158,10 @@ export default {
   },
   mounted() {},
   methods: {
-    setloading(loading) {
-      this.$emit("setloading", loading);
+    getBalance() {
+      api.partyBalance(this.$route.params.id).then((val) => {
+        this.balance = val;
+      });
     },
     getCurrencies() {
       api.currencies().then((Response) => {
