@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       links: [
+        { path: "/hisobotlar", icon: "fa-chart-line", title: "Hisobotlar" },
         { path: "/omborlar", icon: "fa-warehouse", title: "Omborlar" },
         {
           path: "/taminotlar",

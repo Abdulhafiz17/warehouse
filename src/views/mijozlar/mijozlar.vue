@@ -70,11 +70,11 @@
           </ul>
           <div class="row my-1">
             <div class="col">
-              <!-- <router-link :to="`/mijozTarix/${item.id}`"> -->
-              <btn block="true" color="cyan">
-                <i class="fa fa-history"></i>
-              </btn>
-              <!-- </router-link> -->
+              <router-link :to="`/mijozTarix/${item.id}`">
+                <btn block="true" color="cyan">
+                  <i class="fa fa-history"></i>
+                </btn>
+              </router-link>
             </div>
             <div class="col">
               <router-link :to="`/mijoz/${item.id}`">

@@ -110,7 +110,7 @@ export function updateWarehouse(data) {
   return api("update_warehouse", "put", data);
 }
 
-// products
+// product
 
 export function warehouseProducts(warehouse_id, search, page, limit) {
   let search_query = ``;
@@ -119,6 +119,9 @@ export function warehouseProducts(warehouse_id, search, page, limit) {
     `get_warehouse_products?warehouse_id=${warehouse_id}${search_query}&page=${page}&limit=${limit}`,
     "get"
   );
+}
+export function updateWarehouseProductPrice(data) {
+  return api(`update_warehouse_product_price`, "put", data);
 }
 
 // user
@@ -303,4 +306,19 @@ export function takeSupply(data) {
 }
 export function removeSupply(supply_id) {
   return api(`remove_supply/${supply_id}`, "delete");
+}
+
+// statistic
+
+export function profitStatistic(from_time, to_time, shop_id) {
+  let time_query = ``;
+  if (from_time && to_time)
+    time_query = `from_time=${from_time}&to_time=${to_time}&`;
+  return api(`get_profit_statistics?${time_query}shop_id=${shop_id}`, "get");
+}
+export function productStatistic(from_time, to_time, limit) {
+  let time_query = ``;
+  if (from_time && to_time)
+    time_query = `from_time=${from_time}&to_time=${to_time}&`;
+  return api(`get_product_statistics?${time_query}limit=${limit}`, "get");
 }

@@ -6,7 +6,7 @@
           <div class="col-md-4 text-start">
             <h3>Omborlar</h3>
           </div>
-          <div class="col-md-4" v-if="!creatable"></div>
+          <!-- <div class="col-md-4" v-if="!creatable"></div> -->
           <div class="col-md-4">
             <input
               type="search"
@@ -17,7 +17,8 @@
               @keyup="get(0, 25)"
             />
           </div>
-          <div class="col-md-4" v-if="creatable">
+          <div class="col-md-4">
+            <!-- v-if="creatable" -->
             <btn
               color="green"
               block="true"

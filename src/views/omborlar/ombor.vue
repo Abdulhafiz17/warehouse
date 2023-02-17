@@ -35,6 +35,7 @@
             <th>Narx</th>
             <th>Tan narx</th>
             <th>Sotuv narx</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -73,11 +74,21 @@
                 item.trade_currency
               }}
             </td>
+            <td>
+              <btn
+                color="yellow"
+                data-toggle="modal"
+                data-target="#edit"
+                @click="product = item"
+              >
+                <i class="fa fa-edit"></i>
+              </btn>
+            </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="8">
+            <td colspan="9">
               <pagination
                 :page="products?.current_page"
                 :pages="products?.pages"
@@ -90,6 +101,56 @@
       </table>
     </div>
   </card>
+
+  <modal id="edit">
+    <template #header>
+      <h5>
+        {{
+          product?.Warehouse_products?.brand?.category?.name +
+          " " +
+          product?.Warehouse_products?.brand?.name +
+          " " +
+          product?.Warehouse_products?.name
+        }}
+      </h5>
+    </template>
+    <template #body>
+      <form id="edit-form" @submit.prevent="putProduct(product)">
+        <div class="row">
+          <div class="col-12">
+            <div class="input-group" v-if="product">
+              <input
+                color="green"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="narx"
+                required
+                v-model="product.Warehouse_products.trade_price"
+              />
+              <select
+                color="green"
+                class="form-select"
+                v-model="product.Warehouse_products.trade_currency_id"
+              >
+                <option v-for="item in currencies" :key="item" :value="item.id">
+                  {{ item.currency }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <btn form="edit-form">
+        <i class="far fa-circle-xmark"></i>
+      </btn>
+      <btn color="red" data-dismiss="modal" close-edit>
+        <i class="far fa-circle-xmark"></i>
+      </btn>
+    </template>
+  </modal>
 </template>
 
 <script>
@@ -105,21 +166,41 @@ export default {
       search: "",
       warehouse_id: this.$route.params.id,
       products: null,
+      currencies: [],
+      product: null,
     };
   },
   setup() {
     return { util };
   },
   created() {
-    this.getProducts(0, 25);
+    this.getCurrencies(0, 25);
   },
   methods: {
+    getCurrencies(page, limit) {
+      api.currencies().then((val) => {
+        this.currencies = val;
+        this.getProducts(page, limit);
+      });
+    },
     getProducts(page, limit) {
       api
         .warehouseProducts(this.warehouse_id, this.search, page, limit)
         .then((val) => {
           this.products = val;
         });
+    },
+    putProduct(product) {
+      let data = {
+        id: product.Warehouse_products.id,
+        trade_price: product.Warehouse_products.trade_price,
+        trade_currency_id: product.Warehouse_products.trade_currency_id,
+      };
+      api.updateWarehouseProductPrice(data).then((val) => {
+        api.success("close-edit").then(() => {
+          this.getProducts(0, 25);
+        });
+      });
     },
   },
 };

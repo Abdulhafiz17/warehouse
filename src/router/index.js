@@ -27,6 +27,12 @@ const routes = [
     component: () => import("../views/main/main.vue"),
   },
   {
+    path: "/hisobotlar",
+    name: "hisobotlar",
+    beforeEnter: auth,
+    component: () => import("../views/hisobotlar/hisobotlar.vue"),
+  },
+  {
     path: "/omborlar",
     name: "omborlar",
     beforeEnter: auth,
