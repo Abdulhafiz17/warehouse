@@ -171,6 +171,15 @@ export function updateShop(data) {
 export function takeMoneyFromShop(data) {
   return api(`take_money_from_shop`, "post", data);
 }
+export function shopIncomes(shop_id, from_time, to_time, page, limit) {
+  let time_query = ``;
+  if (from_time && to_time)
+    time_query = `from_time=${from_time}&to_time=${to_time}&`;
+  return api(
+    `get_shop_incomes?shop_id=${shop_id}&${time_query}page=${page}&limit=${limit}`,
+    "get"
+  );
+}
 
 // order
 

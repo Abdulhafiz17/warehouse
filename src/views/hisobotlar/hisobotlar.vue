@@ -36,6 +36,7 @@
                   style="max-height: 20vh"
                   @scroll="scrollShops()"
                 >
+                  <li @click="shop = null">Umumiy</li>
                   <li
                     v-for="item in shops?.data"
                     :key="item"
