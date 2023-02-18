@@ -204,9 +204,9 @@ export function confirmationOrder(data) {
 
 // trade
 
-export function trades(order_id, page, limit) {
+export function trades(order_id, warehouse_id, page, limit) {
   return api(
-    `get_trades?order_id=${order_id}&page=${page}&limit=${limit}`,
+    `get_trades?order_id=${order_id}&warehouse_id=${warehouse_id}&page=${page}&limit=${limit}`,
     "get"
   );
 }
@@ -304,9 +304,9 @@ export function partyBalance(party_id) {
 
 // supply
 
-export function supplies(market_id, party_id, page, limit) {
+export function supplies(market_id, party_id, warehouse_id, page, limit) {
   return api(
-    `get_supplies?market_id=${market_id}&party_id=${party_id}&page=${page}&limit=${limit}`,
+    `get_supplies?market_id=${market_id}&party_id=${party_id}&warehouse_id=${warehouse_id}&page=${page}&limit=${limit}`,
     "get"
   );
 }

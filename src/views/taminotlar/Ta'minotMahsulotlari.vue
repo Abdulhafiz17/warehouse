@@ -414,7 +414,7 @@ export default {
     getSupplies(page, limit) {
       let market_id = this.supplies_market ? this.supplies_market.id : 0;
       api
-        .supplies(market_id, this.$route.params.id, page, limit)
+        .supplies(market_id, this.$route.params.id, 0, page, limit)
         .then((Response) => {
           this.supplies_page = Response.current_page;
           this.supplies_pages = Response.pages;

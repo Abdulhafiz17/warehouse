@@ -36,6 +36,14 @@
                 {{ item.time }}
               </span>
             </li>
+            <div>
+              <pagination
+                :page="parties_false?.current_page"
+                :pages="parties_false?.pages"
+                :limit="parties_false?.limit"
+                @get="getFalse"
+              />
+            </div>
           </ul>
         </div>
       </card>
@@ -58,6 +66,14 @@
                 {{ item.time }}
               </span>
             </li>
+            <div>
+              <pagination
+                :page="parties_true?.current_page"
+                :pages="parties_true?.pages"
+                :limit="parties_true?.limit"
+                @get="getTrue"
+              />
+            </div>
           </ul>
         </div>
       </card>

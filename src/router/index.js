@@ -45,6 +45,12 @@ const routes = [
     component: () => import("../views/omborlar/ombor.vue"),
   },
   {
+    path: "/omborTarix/:id",
+    name: "omborTarix",
+    beforeEnter: auth,
+    component: () => import("../views/omborlar/omborTarix.vue"),
+  },
+  {
     path: "/hodimlar",
     name: "hodimlar",
     beforeEnter: auth,

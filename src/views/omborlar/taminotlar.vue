@@ -5,6 +5,7 @@
         <thead>
           <tr>
             <th>Partiya</th>
+            <th>Ta'minotchi</th>
             <th>Kategoriya</th>
             <th>Brend</th>
             <th>Nomi</th>
@@ -21,6 +22,7 @@
         <tbody>
           <tr v-for="item in data?.data" :key="item">
             <td>{{ item.party.id }}</td>
+            <td>{{ item.market.name }}</td>
             <td>{{ item.brand.category.name }}</td>
             <td>{{ item.brand.name }}</td>
             <td>{{ item.name }}</td>
@@ -38,7 +40,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="7">
+            <td colspan="9">
               <pagination
                 :page="data?.current_page"
                 :pages="data?.pages"
@@ -66,25 +68,25 @@
               block="true"
               class="dropdown-toggle"
               data-toggle="dropdown"
-              @click="getParties()"
+              @click="getMarkets()"
             >
-              {{ party ? "Partiya id: " + party?.id : "Partiya" }}
+              {{ market ? market?.name : "Ta'minotchi" }}
             </btn>
             <div
               class="dropdown-menu w-100 mt-1"
               aria-labelledby="dropdownMenuButtonMarkets"
             >
               <ul
-                class="responsive-y parties-scroll"
+                class="responsive-y markets-scroll"
                 style="max-height: 20vh"
-                @scroll="scrollParties()"
+                @scroll="scrollMarkets()"
               >
                 <li
-                  v-for="item in parties?.data"
+                  v-for="item in markets?.data"
                   :key="item"
-                  @click="party = item"
+                  @click="market = item"
                 >
-                  {{ "Partiya id: " + item.id }}
+                  {{ item.name }}
                 </li>
               </ul>
             </div>
@@ -100,7 +102,7 @@
         color="red"
         data-dismiss="modal"
         @click="
-          party = null;
+          market = null;
           get(0, 25);
         "
       >
@@ -114,15 +116,13 @@
 import * as api from "../../utils/api";
 import pagination from "@/components/pagination/pagination.vue";
 export default {
-  name: "taminotTarixi",
+  name: "taminotlar",
   components: { pagination },
   data() {
     return {
       _: Intl.NumberFormat(),
-      parties: null,
-      party: null,
-      warehouses: [],
-      warehouse: null,
+      markets: null,
+      market: null,
       data: null,
     };
   },
@@ -131,27 +131,27 @@ export default {
   },
   methods: {
     get(page, limit) {
-      let party_id = this.party ? this.party.id : 0;
+      let market_id = this.market ? this.market.id : 0;
       api
-        .supplies(this.$route.params.id, party_id, 0, page, limit)
+        .supplies(market_id, 0, this.$route.params.id, page, limit)
         .then((val) => {
           this.data = val;
         });
     },
-    getParties() {
-      api.parties(true, 0, 25).then((Response) => {
-        this.parties = Response;
+    getMarkets() {
+      api.markets("", 0, 25).then((Response) => {
+        this.markets = Response;
       });
     },
-    scrollParties() {
-      let div = document.querySelector(".parties-scroll");
+    scrollMarkets() {
+      let div = document.querySelector(".markets-scroll");
       if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
-        if (this.parties?.current_page < this.parties?.pages - 1) {
+        if (this.markets?.current_page < this.markets?.pages - 1) {
           api
-            .parties(true, this.parties?.current_page + 1, 25)
+            .markets("", this.markets?.current_page + 1, 25)
             .then((Response) => {
-              this.parties.current_page = Response.current_page;
-              this.parties.data = this.parties?.data.concat(Response.data);
+              this.markets.current_page = Response.current_page;
+              this.markets.data = this.markets?.data.concat(Response.data);
             });
         }
       }

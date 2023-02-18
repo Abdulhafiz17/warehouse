@@ -326,7 +326,7 @@ export default {
       });
     },
     getTrades(page, limit) {
-      api.trades(this.order.id, page, limit).then((val) => {
+      api.trades(this.order.id, 0, page, limit).then((val) => {
         this.trades = val;
         this.getBalance();
       });
