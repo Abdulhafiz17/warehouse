@@ -57,6 +57,12 @@ const routes = [
     component: () => import("../views/hodimlar/hodimlar.vue"),
   },
   {
+    path: "/hodimTarix/:id",
+    name: "hodimTarix",
+    beforeEnter: auth,
+    component: () => import("../views/hodimlar/hodimTarix.vue"),
+  },
+  {
     path: "/mijozlar",
     name: "mijozlar",
     beforeEnter: auth,

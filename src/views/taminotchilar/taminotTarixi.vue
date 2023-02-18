@@ -133,7 +133,7 @@ export default {
     get(page, limit) {
       let party_id = this.party ? this.party.id : 0;
       api
-        .supplies(this.$route.params.id, party_id, 0, page, limit)
+        .supplies(this.$route.params.id, party_id, 0, 0, page, limit)
         .then((val) => {
           this.data = val;
         });

@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Mijoz bilan savdo</h3>
+            <h3>{{shop?.name}} bilan savdo</h3>
           </div>
           <div class="col-md-4">
             <btn block="true" @click="addOrder()" v-if="!order">
@@ -68,7 +68,7 @@
                     " "
                   }}
                   <strong>{{
-                    item.Warehouse_products.quantity + " dona"
+                    item.sum_quantity + " dona"
                   }}</strong>
                 </span>
                 <span>
@@ -130,7 +130,7 @@
                     item.Trades.warehouse_product.name +
                     " "
                   }}
-                  <strong>{{ item.Trades.quantity + " dona" }}</strong>
+                  <strong>{{ item.sum_quantity + " dona" }}</strong>
                 </span>
                 <span>
                   <span class="px-2">{{
@@ -242,6 +242,7 @@ export default {
   data() {
     return {
       _: Intl.NumberFormat(),
+      shop: null,
       orders: [],
       order: null,
       balance: [],
@@ -265,9 +266,16 @@ export default {
     };
   },
   created() {
-    this.getOrders();
+    this.get();
   },
   methods: {
+    get() {
+      api.shop(this.$route.params.id)
+      .then((val) => {
+        this.shop = val;
+        this.getOrders();
+      })
+    },
     getOrders() {
       api.orders(this.$route.params.id, 0, false, 0, 10).then((val) => {
         this.orders = val.data;
@@ -314,7 +322,7 @@ export default {
     },
     getProducts(page, limit, next) {
       api
-        .warehouseProducts(this.warehouse_id, this.search, page, limit)
+        .warehouseProducts(this.warehouse_id, this.search, "true", page, limit)
         .then((val) => {
           this.products = val;
           if (next) this.getTrades(0, 25);
@@ -326,7 +334,7 @@ export default {
       });
     },
     getTrades(page, limit) {
-      api.trades(this.order.id, 0, page, limit).then((val) => {
+      api.trades(this.order.id, 0, 0, page, limit).then((val) => {
         this.trades = val;
         this.getBalance();
       });

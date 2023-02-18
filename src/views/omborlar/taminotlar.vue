@@ -133,7 +133,7 @@ export default {
     get(page, limit) {
       let market_id = this.market ? this.market.id : 0;
       api
-        .supplies(market_id, 0, this.$route.params.id, page, limit)
+        .supplies(market_id, 0, this.$route.params.id, 0, page, limit)
         .then((val) => {
           this.data = val;
         });

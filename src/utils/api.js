@@ -98,6 +98,9 @@ export function token(data) {
 
 // warehouse
 
+export function warehouse(warehouse_id) {
+  return api(`get_warehouse/${warehouse_id}`, "get");
+}
 export function warehouses(search) {
   let search_query = ``;
   if (search) search_query = `?search=${search}`;
@@ -112,11 +115,13 @@ export function updateWarehouse(data) {
 
 // product
 
-export function warehouseProducts(warehouse_id, search, page, limit) {
+export function warehouseProducts(warehouse_id, search, status, page, limit) {
   let search_query = ``;
   if (search) search_query = `&search=${search}`;
+  let status_query = ``;
+  if (status) status_query = `&status=${status}`;
   return api(
-    `get_warehouse_products?warehouse_id=${warehouse_id}${search_query}&page=${page}&limit=${limit}`,
+    `get_warehouse_products?warehouse_id=${warehouse_id}${search_query}${status_query}&page=${page}&limit=${limit}`,
     "get"
   );
 }
@@ -126,6 +131,9 @@ export function updateWarehouseProductPrice(data) {
 
 // user
 
+export function user(user_id) {
+  return api(`get_user/${user_id}`, "get");
+}
 export function users(search, status, page, limit) {
   let search_query = ``;
   if (search) search_query = `search=${search}&`;
@@ -143,6 +151,9 @@ export function updateUser(data) {
 
 // market
 
+export function market(market_id) {
+  return api(`get_market/${market_id}`, "get");
+}
 export function markets(search, page, limit) {
   let search_query = ``;
   if (search) search_query = `search=${search}&`;
@@ -157,6 +168,9 @@ export function updateMarket(data) {
 
 // shop
 
+export function shop(shop_id) {
+  return api(`get_shop/${shop_id}`, "get");
+}
 export function shops(search, page, limit) {
   let search_query = ``;
   if (search) search_query = `search=${search}$`;
@@ -204,9 +218,9 @@ export function confirmationOrder(data) {
 
 // trade
 
-export function trades(order_id, warehouse_id, page, limit) {
+export function trades(order_id, warehouse_id, product_id, page, limit) {
   return api(
-    `get_trades?order_id=${order_id}&warehouse_id=${warehouse_id}&page=${page}&limit=${limit}`,
+    `get_trades?order_id=${order_id}&warehouse_id=${warehouse_id}&w_p_id=${product_id}&page=${page}&limit=${limit}`,
     "get"
   );
 }
@@ -304,9 +318,16 @@ export function partyBalance(party_id) {
 
 // supply
 
-export function supplies(market_id, party_id, warehouse_id, page, limit) {
+export function supplies(
+  market_id,
+  party_id,
+  warehouse_id,
+  warehouse_product_id,
+  page,
+  limit
+) {
   return api(
-    `get_supplies?market_id=${market_id}&party_id=${party_id}&warehouse_id=${warehouse_id}&page=${page}&limit=${limit}`,
+    `get_supplies?market_id=${market_id}&party_id=${party_id}&warehouse_id=${warehouse_id}&w_p_id=${warehouse_product_id}&page=${page}&limit=${limit}`,
     "get"
   );
 }

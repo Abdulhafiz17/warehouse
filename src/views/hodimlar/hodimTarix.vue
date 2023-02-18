@@ -1,25 +1,41 @@
 <template>
-  <ul class="responsive-y" style="max-height: 75vh">
-    <li
-      v-for="item in orders?.data"
-      :key="item"
-      @click="
-        order = item;
-        getBalance();
-      "
-    >
-      <span>{{ "Buyurtma id: " + item.id }}</span>
-      <span>{{ item.time.replace("T", " ") }}</span>
-    </li>
-    <span>
-      <pagination
-        :page="orders?.current_page"
-        :pages="orders?.pages"
-        :limit="orders?.limit"
-        @get="get"
-      />
-    </span>
-  </ul>
+  <div class="row gap-1">
+    <div class="col-12">
+      <card color="green">
+        <div class="row">
+          <div class="col-md-4 text-start">
+            <h3>Hodim {{ user?.name }}</h3>
+          </div>
+        </div>
+      </card>
+    </div>
+
+    <div class="col-12">
+      <card color="green">
+        <ul class="responsive-y" style="max-height: 83vh">
+          <li
+            v-for="item in orders?.data"
+            :key="item"
+            @click="
+              order = item;
+              getBalance();
+            "
+          >
+            <span>{{ "Buyurtma id: " + item.id }}</span>
+            <span>{{ item.time.replace("T", " ") }}</span>
+          </li>
+          <div>
+            <pagination
+              :page="orders?.current_page"
+              :pages="orders?.pages"
+              :limit="orders?.limit"
+              @get="getOrders"
+            />
+          </div>
+        </ul>
+      </card>
+    </div>
+  </div>
 
   <button v-show="false" data-toggle="modal" data-target="#order"></button>
   <modal id="order" size="lg">
@@ -111,11 +127,12 @@
 import * as api from "../../utils/api";
 import pagination from "@/components/pagination/pagination.vue";
 export default {
-  name: "buyurtmalar",
+  name: "hodimTarix",
   components: { pagination },
   data() {
     return {
       _: Intl.NumberFormat(),
+      user: null,
       orders: null,
       order: null,
       balance: null,
@@ -123,11 +140,17 @@ export default {
     };
   },
   created() {
-    this.get(0, 25);
+    this.get();
   },
   methods: {
-    get(page, limit) {
-      api.orders(this.$route.params.id, 0, true, page, limit).then((val) => {
+    get() {
+      api.user(this.$route.params.id).then((val) => {
+        this.user = val;
+        this.getOrders(0, 25);
+      });
+    },
+    getOrders(page, limit) {
+      api.orders(0, this.$route.params.id, true, page, limit).then((val) => {
         this.orders = val;
       });
     },

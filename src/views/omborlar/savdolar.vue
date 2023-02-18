@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     get(page, limit) {
-      api.trades(0, this.$route.params.id, page, limit).then((val) => {
+      api.trades(0, this.$route.params.id, 0, page, limit).then((val) => {
         this.trades = val;
       });
     },

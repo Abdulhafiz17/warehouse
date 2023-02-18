@@ -13,13 +13,9 @@ export default createStore({
   mutations: {
     setloading(state, loading) {
       clearTimeout(timeout);
-      if (loading) {
-        timeout = setTimeout(() => {
-          state.loading = loading;
-        }, 200);
-      } else {
+      timeout = setTimeout(() => {
         state.loading = loading;
-      }
+      }, 200);
     },
   },
   getters: {

@@ -5,7 +5,7 @@
       :key="item"
       :class="item == active_tab ? active_class : ''"
       @click="setTab(index)"
-      :text="item"
+      :name="tab_slots[index]"
     >
       <span>{{ item }}</span>
     </button>

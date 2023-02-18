@@ -50,6 +50,13 @@
           </ul>
           <div class="row my-1">
             <div class="col">
+              <router-link :to="`/hodimTarix/${item.id}`">
+                <btn block="true" color="cyan">
+                  <i class="fa fa-history"></i>
+                </btn>
+              </router-link>
+            </div>
+            <div class="col">
               <btn
                 block="true"
                 color="yellow"
@@ -64,7 +71,7 @@
                   edit.username = item.username;
                 "
               >
-                <span class="material-symbols-outlined"> edit </span>
+                <i class="fa fa-edit"></i>
               </btn>
             </div>
           </div>

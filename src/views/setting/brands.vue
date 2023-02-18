@@ -89,6 +89,14 @@
           </template>
         </collapse>
       </div>
+      <div>
+        <pagination
+          :page="categories?.current_page"
+          :pages="categories?.pages"
+          :limit="categories?.limit"
+          @get="getCategories"
+        />
+      </div>
     </div>
   </div>
 </template>
