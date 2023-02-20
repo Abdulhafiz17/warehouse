@@ -12,101 +12,7 @@
       </card>
     </div>
 
-    <div class="col-12">
-      <card color="green">
-        <div class="row">
-          <div class="col-md-2">
-            <div class="dropdown">
-              <btn
-                id="dropdownMenuButtonMarkets"
-                type="button"
-                block="true"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                @click="getShops()"
-              >
-                {{ shop ? shop?.name : "Mijoz" }}
-              </btn>
-              <div
-                class="dropdown-menu w-100 mt-1"
-                aria-labelledby="dropdownMenuButtonMarkets"
-              >
-                <ul
-                  class="responsive-y shops-scroll"
-                  style="max-height: 20vh"
-                  @scroll="scrollShops()"
-                >
-                  <li @click="shop = null">Umumiy</li>
-                  <li
-                    v-for="item in shops?.data"
-                    :key="item"
-                    @click="shop = item"
-                  >
-                    {{ item.name }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <input
-              type="date"
-              color="green"
-              class="form-control"
-              v-model="from_time"
-            />
-          </div>
-          <div class="col-md-4">
-            <input
-              type="date"
-              color="green"
-              class="form-control"
-              v-model="to_time"
-            />
-          </div>
-          <div class="col-md-2">
-            <btn block="true" @click="getProfitStatistic()">
-              <i class="fa fa-search"></i>
-            </btn>
-          </div>
-        </div>
-      </card>
-    </div>
-
-    <div class="col-12">
-      <card color="green">
-        <div class="row">
-          <div class="col-12 text-start">
-            <h4>Savdo</h4>
-            <hr />
-          </div>
-          <div class="col-md-4">
-            <strong>Umumiy savdo</strong>
-            <ul>
-              <li v-for="item in profit?.total_trade_prices" :key="item">
-                {{ _.format(item.trade_price) + " " + item.currency }}
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <strong>Umumiy tan narx</strong>
-            <ul>
-              <li v-for="item in profit?.total_trade_tan_narxs" :key="item">
-                {{ _.format(item.trade_tan_narx) + " " + item.currency }}
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <strong>Foyda</strong>
-            <ul>
-              <li v-for="item in profit?.total_trade_prices" :key="item">
-                {{ _.format(findProfit(item)) + " " + item.currency }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </card>
-    </div>
+    <savdoChart />
 
     <div class="col-12">
       <card color="green">
@@ -164,8 +70,10 @@
 
 <script>
 import * as api from "../../utils/api";
+import savdoChart from "./savdoChart.vue";
 export default {
   name: "hisobotlar",
+  components: { savdoChart },
   data() {
     return {
       _: Intl.NumberFormat(),
@@ -197,7 +105,7 @@ export default {
     };
   },
   created() {
-    this.getShops();
+    // this.getShops();
   },
   methods: {
     getShops() {
@@ -229,7 +137,7 @@ export default {
         return price.currency == item.currency;
       });
 
-      return item.trade_price - tan_narx.trade_tan_narx;
+      return item.trade_price - tan_narx?.trade_tan_narx;
     },
     getProductStatistic() {
       api.productStatistic(this.from_time1, this.to_time1, 10).then((val) => {

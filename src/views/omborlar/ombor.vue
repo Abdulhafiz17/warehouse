@@ -172,11 +172,17 @@
       <h4>Filter</h4>
     </template>
     <template #body>
-      <div class="row">
+      <div class="row gap-2">
         <div class="col-12">
           <select color="green" class="form-select" v-model="status">
             <option value="false">Narx belgilanmagan</option>
             <option value="true">Narx belgilangan</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <select color="green" class="form-select" v-model="quantity">
+            <option value="true">Qoldiqli</option>
+            <option value="false">Qoldiq qugagan</option>
           </select>
         </div>
       </div>
@@ -345,6 +351,7 @@ export default {
       search: "",
       warehouse_id: this.$route.params.id,
       status: "false",
+      quantity: "true",
       products: null,
       currencies: [],
       product: null,
@@ -385,6 +392,7 @@ export default {
           this.warehouse_id,
           this.search,
           this.status,
+          this.quantity,
           page,
           limit
         )

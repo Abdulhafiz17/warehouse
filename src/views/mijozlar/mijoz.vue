@@ -188,20 +188,8 @@
                 required
                 v-model="trade.price"
               />
-              <div class="input-group-append">
-                <select
-                  color="green"
-                  class="form-select"
-                  v-model="trade.currency_id"
-                >
-                  <option
-                    v-for="item in currencies"
-                    :key="item"
-                    :value="item.id"
-                  >
-                    {{ item.currency }}
-                  </option>
-                </select>
+              <div class="input-group-text">
+                {{ product?.trade_currency }}
               </div>
             </div>
           </div>
@@ -322,7 +310,7 @@ export default {
     },
     getProducts(page, limit, next) {
       api
-        .warehouseProducts(this.warehouse_id, this.search, "true", page, limit)
+        .warehouseProducts(this.warehouse_id, this.search, "true", "true", page, limit)
         .then((val) => {
           this.products = val;
           if (next) this.getTrades(0, 25);
@@ -343,6 +331,7 @@ export default {
       this.trade.brand_id = this.product?.Warehouse_products?.brand?.id;
       this.trade.cat_id = this.product?.Warehouse_products?.brand?.category?.id;
       this.trade.name = this.product?.Warehouse_products?.name;
+      this.trade.currency_id = this.product?.Warehouse_products?.trade_currency_id;
       this.trade.order_id = this.order?.id;
       this.trade.warehouse_id = this.warehouse_id;
       api.toTrade(this.trade).then((val) => {
