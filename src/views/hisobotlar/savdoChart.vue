@@ -78,6 +78,7 @@
 import * as api from "../../utils/api";
 export default {
   name: "savdoChart",
+  emits: ["next"],
   data() {
     return {
       _: Intl.NumberFormat(),
@@ -108,6 +109,7 @@ export default {
         ],
       },
       charts: [],
+      next: true,
     };
   },
   created() {
@@ -181,7 +183,7 @@ export default {
       });
     },
     createChart() {
-      this.charts.forEach((item) => {
+      this.charts.forEach((item, index) => {
         new Chart(document.getElementById(item.canvasId).getContext("2d"), {
           type: "pie",
           data: item.data,
@@ -190,6 +192,12 @@ export default {
             maintainAspectRatio: false,
           },
         });
+        if (index == this.charts.length - 1) {
+          if (this.next) {
+            this.next = false;
+            this.$emit("next");
+          }
+        }
       });
     },
   },

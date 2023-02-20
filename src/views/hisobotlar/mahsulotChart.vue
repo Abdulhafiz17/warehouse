@@ -66,9 +66,7 @@ export default {
       borders: [],
     };
   },
-  created() {
-    this.getProductStatistic();
-  },
+  created() {},
   methods: {
     getProductStatistic() {
       api.productStatistic(this.from_time, this.to_time, 10).then((val) => {
