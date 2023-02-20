@@ -1,70 +1,75 @@
 <template>
   <div class="col-12">
     <card color="green">
-      <div class="row">
-        <div class="col-md-2">
-          <div class="dropdown">
-            <btn
-              id="dropdownMenuButtonMarkets"
-              type="button"
-              block="true"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              @click="getShops()"
-            >
-              {{ shop ? shop?.name : "Umumiy" }}
-            </btn>
-            <div
-              class="dropdown-menu w-100 mt-1"
-              aria-labelledby="dropdownMenuButtonMarkets"
-            >
-              <ul
-                class="responsive-y shops-scroll"
-                style="max-height: 20vh"
-                @scroll="scrollShops()"
-              >
-                <li @click="shop = null">Umumiy</li>
-                <li
-                  v-for="item in shops?.data"
-                  :key="item"
-                  @click="shop = item"
+      <div class="row gap-1">
+        <div class="col-12 text-start">
+          <h4>Savdolar</h4>
+          <hr />
+        </div>
+
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="dropdown">
+                <btn
+                  id="dropdownMenuButtonMarkets"
+                  type="button"
+                  block="true"
+                  class="dropdown-toggle"
+                  data-toggle="dropdown"
+                  @click="getShops()"
                 >
-                  {{ item.name }}
-                </li>
-              </ul>
+                  {{ shop ? shop?.name : "Umumiy" }}
+                </btn>
+                <div
+                  class="dropdown-menu w-100 mt-1"
+                  aria-labelledby="dropdownMenuButtonMarkets"
+                >
+                  <ul
+                    class="responsive-y shops-scroll"
+                    style="max-height: 20vh"
+                    @scroll="scrollShops()"
+                  >
+                    <li @click="shop = null">Umumiy</li>
+                    <li
+                      v-for="item in shops?.data"
+                      :key="item"
+                      @click="shop = item"
+                    >
+                      {{ item.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <input
+                type="date"
+                color="green"
+                class="form-control"
+                v-model="from_time"
+              />
+            </div>
+            <div class="col-md-4">
+              <input
+                type="date"
+                color="green"
+                class="form-control"
+                v-model="to_time"
+              />
+            </div>
+            <div class="col-md-2">
+              <btn block="true" @click="getProfitStatistic()">
+                <i class="fa fa-search"></i>
+              </btn>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <input
-            type="date"
-            color="green"
-            class="form-control"
-            v-model="from_time"
-          />
-        </div>
-        <div class="col-md-4">
-          <input
-            type="date"
-            color="green"
-            class="form-control"
-            v-model="to_time"
-          />
-        </div>
-        <div class="col-md-2">
-          <btn block="true" @click="getProfitStatistic()">
-            <i class="fa fa-search"></i>
-          </btn>
+
+        <div class="col-12">
+          <div id="savdo"></div>
         </div>
       </div>
-    </card>
-  </div>
-
-  <div class="col-12">
-    <card color="green">
-      <h4 class="text-start">Savdolar</h4>
-      <hr />
-      <div id="savdo"></div>
     </card>
   </div>
 </template>

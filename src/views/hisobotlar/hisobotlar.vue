@@ -14,66 +14,17 @@
 
     <savdoChart />
 
-    <div class="col-12">
-      <card color="green">
-        <div class="row">
-          <div class="col-md-5">
-            <input
-              type="date"
-              color="green"
-              class="form-control"
-              v-model="from_time"
-            />
-          </div>
-          <div class="col-md-5">
-            <input
-              type="date"
-              color="green"
-              class="form-control"
-              v-model="to_time"
-            />
-          </div>
-          <div class="col-md-2">
-            <btn block="true" @click="getProductStatistic()">
-              <i class="fa fa-search"></i>
-            </btn>
-          </div>
-        </div>
-      </card>
-    </div>
-
-    <div class="col-12">
-      <card color="green">
-        <div class="row">
-          <div class="col-12 text-start">
-            <h4>Mahsulotlar</h4>
-            <hr />
-          </div>
-          <div class="col-md-4 mb-1" v-for="item in products" :key="item">
-            <card color="green" class="h-100">
-              {{
-                item.Trades.warehouse_product.brand.category.name +
-                " " +
-                item.Trades.warehouse_product.brand.name +
-                " " +
-                item.Trades.warehouse_product.name
-              }}
-              <hr />
-              {{ item.sum_quantity + " dona" }}
-            </card>
-          </div>
-        </div>
-      </card>
-    </div>
+    <mahsulotChart />
   </div>
 </template>
 
 <script>
 import * as api from "../../utils/api";
 import savdoChart from "./savdoChart.vue";
+import mahsulotChart from "./mahsulotChart.vue";
 export default {
   name: "hisobotlar",
-  components: { savdoChart },
+  components: { savdoChart, mahsulotChart },
   data() {
     return {
       _: Intl.NumberFormat(),
