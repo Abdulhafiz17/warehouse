@@ -72,6 +72,13 @@
           </ul>
           <div class="row my-1">
             <div class="col">
+              <router-link :to="`/taminot/${item.id}`">
+                <btn block="true">
+                  <i class="fa fa-truck"></i>
+                </btn>
+              </router-link>
+            </div>
+            <div class="col">
               <router-link :to="`/taminotchi/${item.id}`">
                 <btn block="true" color="cyan">
                   <i class="fa fa-history"></i>

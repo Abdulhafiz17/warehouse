@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="supply_status == 'false'">
+  <div class="row">
     <div class="col-md-5">
       <div class="input-group">
         <input
@@ -73,10 +73,7 @@
       </btn>
     </div>
   </div>
-  <div
-    class="responsive-y mt-2"
-    :style="`height: ${supply_status == 'false' ? '60vh' : '65vh'}`"
-  >
+  <div class="responsive-y mt-2" style="height: 60vh">
     <ul>
       <li v-for="item in expenses" :key="item">
         <span class="text-left">
@@ -101,6 +98,9 @@ import * as api from "../../utils/api";
 import Pagination from "../../components/pagination/pagination.vue";
 export default {
   name: "Expenses",
+  props: {
+    party: { required: true },
+  },
   emits: ["getBalance"],
   components: { Pagination },
   data() {
@@ -115,25 +115,31 @@ export default {
       new_expense: {
         money: null,
         currency_id: null,
-        source: this.$route.params.id,
+        source: null,
         comment: null,
       },
       expenses: [],
     };
   },
+  computed: {
+    party_id() {
+      return this.$props.party?.id;
+    },
+  },
   created() {
     this.getCurrencies();
+    if (this.party_id) {
+      this.getExpenses(0, 25);
+    }
   },
   methods: {
     getCurrencies() {
       api.currencies().then((Response) => {
         this.currencies = Response;
-        this.getExpenses(0, 25);
       });
     },
     getExpenses(page, limit) {
-      this.$emit("setloading", true);
-      api.partyExpenses(this.$route.params.id, page, limit).then((Response) => {
+      api.partyExpenses(this.party_id, page, limit).then((Response) => {
         this.page = Response.current_page;
         this.pages = Response.pages;
         this.limit = Response.limit;
@@ -142,13 +148,13 @@ export default {
       });
     },
     postExpense(expense) {
-      this.$emit("setloading", true);
+      expense.source = this.party_id;
       api.payForPartyExpense(expense).then((Response) => {
         api.success().then(() => {
           this.new_expense = {
             money: null,
             currency_id: null,
-            source: this.$route.params.id,
+            source: this.party_id,
             comment: null,
           };
           this.getExpenses(0, 25);

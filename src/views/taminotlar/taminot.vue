@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Ta'minot id: {{ $route.params.id }}</h3>
+            <h3>{{ market?.name }}dan ta'minot olish</h3>
           </div>
           <div class="col-md-4"></div>
           <div class="col-md-4">
@@ -13,7 +13,7 @@
               block="true"
               data-toggle="modal"
               data-target="#confirm"
-              v-if="supply_status == 'false'"
+              v-if="party"
             >
               Ta'minotni yakunlash
             </btn>
@@ -45,10 +45,10 @@
     :slots="[`products`, `expenses`]"
   >
     <template #products>
-      <Products @getBalance="getBalance" />
+      <Products :party="party" @getBalance="getBalance" ref="products" />
     </template>
     <template #expenses>
-      <Expenses @getBalance="getBalance" />
+      <Expenses :party="party" @getBalance="getBalance" ref="expenses" />
     </template>
   </tabs>
 
@@ -141,6 +141,8 @@ export default {
   data() {
     return {
       _: Intl.NumberFormat(),
+      market: null,
+      party: null,
       supply_status: localStorage.getItem("supply_status"),
       balance: {
         total_supply_price: [],
@@ -154,12 +156,39 @@ export default {
     };
   },
   created() {
+    this.getMarket();
+    this.getParties();
     this.getCurrencies();
   },
-  mounted() {},
   methods: {
+    getMarket() {
+      api.market(this.$route.params.id).then((val) => {
+        this.market = val;
+      });
+    },
+    getParties() {
+      api.parties(false, this.$route.params.id, 0, 1).then((val) => {
+        this.party = val.data[0];
+        if (this.party) {
+          setTimeout(() => {
+            if (this.$refs.products) {
+              this.$refs.products.getSupplies(0, 25);
+            } else if (this.$refs.expenses) {
+              this.$refs.expenses.getExpenses();
+            }
+          }, 500);
+        } else {
+          this.postParty();
+        }
+      });
+    },
+    postParty() {
+      api.createParty(this.$route.params.id).then((val) => {
+        this.getParties();
+      });
+    },
     getBalance() {
-      api.partyBalance(this.$route.params.id).then((val) => {
+      api.partyBalance(this.party.id).then((val) => {
         this.balance = val;
       });
     },
@@ -176,14 +205,14 @@ export default {
     },
     confirmParty() {
       let data = {
-        party_id: this.$route.params.id,
+        party_id: this.party.id,
         warehouse_id: this.warehouse_id,
         currency_id: this.currency_id,
         to_price: this.to_price,
       };
       api.confirmationParty(data).then((Response) => {
         api.success("close-confirm-party").then(() => {
-          this.$router.push("/taminotlar");
+          this.$router.push("/taminotchilar");
         });
       });
     },

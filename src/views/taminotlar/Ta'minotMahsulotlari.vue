@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="supply_status == 'false'">
+  <div class="row">
     <div class="col-md-12">
       <btn class="float-right" data-toggle="modal" data-target="#addProduct">
         <i class="fa fa-cart-plus" /> Mahsulot qo'shish
@@ -7,15 +7,11 @@
     </div>
   </div>
 
-  <div
-    class="responsive-y mt-2"
-    :style="`height: ${supply_status == 'false' ? '60vh' : '65vh'}`"
-  >
+  <div class="responsive-y mt-2" style="height: 60vh">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
           <tr>
-            <th>Hamkor</th>
             <th>Kategoriya</th>
             <th>Brend</th>
             <th>Nomi</th>
@@ -23,15 +19,14 @@
             <th>Narx</th>
             <th>Summa</th>
             <th>
-              <btn color="cyan" data-toggle="modal" data-target="#filter">
+              <!-- <btn color="cyan" data-toggle="modal" data-target="#filter">
                 <i class="fa fa-filter" />
-              </btn>
+              </btn> -->
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in supplies" :key="item">
-            <td>{{ item.market.name }}</td>
             <td>{{ item.brand.category.name }}</td>
             <td>{{ item.brand.name }}</td>
             <td>
@@ -49,11 +44,7 @@
               }}
             </td>
             <td>
-              <btn
-                color="red"
-                @click="deleteSupply(item.id)"
-                v-if="supply_status == 'false'"
-              >
+              <btn color="red" @click="deleteSupply(item.id)">
                 <i class="far fa-circle-xmark" />
               </btn>
             </td>
@@ -79,35 +70,6 @@
     <template #header> <h4>Mahsulot qo'shish</h4> </template>
     <template #body>
       <div class="row gap-2">
-        <div class="col-md-12">
-          <div class="dropdown">
-            <btn
-              id="dropdownMenuButtonMarkets"
-              type="button"
-              block="true"
-              color="green"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              @click="getMarkets()"
-            >
-              {{ market ? market.name : "Hamkor" }}
-            </btn>
-            <div
-              class="dropdown-menu w-100 mt-1"
-              aria-labelledby="dropdownMenuButtonMarkets"
-            >
-              <ul
-                class="responsive-y markets-scroll"
-                style="max-height: 20vh"
-                @scroll="scrollMarkets()"
-              >
-                <li v-for="item in markets" :key="item" @click="market = item">
-                  {{ item.name }}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div class="col-md-12">
           <div class="dropdown">
             <input
@@ -276,7 +238,6 @@
     <template #footer>
       <btn
         :disabled="
-          !market ||
           !category ||
           !brand ||
           !new_supply.name ||
@@ -294,7 +255,7 @@
     </template>
   </modal>
 
-  <modal id="filter" size="sm">
+  <!-- <modal id="filter" size="sm">
     <template #header>
       <h4>Qidiruv</h4>
     </template>
@@ -349,7 +310,7 @@
         <i class="fa fa-trash" />
       </btn>
     </template>
-  </modal>
+  </modal> -->
 </template>
 
 <script>
@@ -357,17 +318,15 @@ import * as api from "../../utils/api";
 import Pagination from "../../components/pagination/pagination.vue";
 export default {
   name: "Products",
+  props: {
+    party: { required: true },
+  },
   emits: ["getBalance"],
   components: { Pagination },
   data() {
     return {
       _: Intl.NumberFormat(),
       supply_status: localStorage.supply_status,
-      markets_search: "",
-      markets_page: 0,
-      markets_pages: 1,
-      markets: [],
-      market: null,
       category_search: "",
       categories_page: 0,
       categories_pages: 1,
@@ -387,7 +346,6 @@ export default {
       supplies_page: 0,
       supplies_pages: 1,
       supplies_limit: 25,
-      supplies_market: null,
       supplies: [],
       new_supply: {
         category_name: "",
@@ -407,14 +365,20 @@ export default {
       },
     };
   },
+  computed: {
+    party_id() {
+      return this.$props.party?.id;
+    },
+  },
   created() {
-    this.getSupplies(0, 25);
+    if (this.party_id) {
+      this.getSupplies(0, 25);
+    }
   },
   methods: {
     getSupplies(page, limit) {
-      let market_id = this.supplies_market ? this.supplies_market.id : 0;
       api
-        .supplies(market_id, this.$route.params.id, 0, 0, page, limit)
+        .supplies(this.$route.params.id, this.party_id, 0, 0, page, limit)
         .then((Response) => {
           this.supplies_page = Response.current_page;
           this.supplies_pages = Response.pages;
@@ -424,13 +388,13 @@ export default {
         });
     },
     addSupply(supply) {
-      supply.market_id = this.market.id;
+      supply.market_id = this.$route.params.id;
       supply.category_name = this.category;
       supply.brand_name = this.brand;
       supply.currency_id = this.currency.id;
+      supply.party_id = this.party_id;
       api.takeSupply(supply).then((Response) => {
         api.success("close-add-supply").then(() => {
-          this.market = null;
           this.category = "";
           this.currency = null;
           this.new_supply = {
@@ -441,7 +405,7 @@ export default {
             price: null,
             currency_id: null,
             market_id: null,
-            party_id: this.$route.params.id,
+            party_id: this.party_id,
           };
           this.getSupplies(0, 25);
         });
@@ -452,14 +416,6 @@ export default {
         api.success().then(() => {
           this.getSupplies(0, 25);
         });
-      });
-    },
-    getMarkets() {
-      let search = this.markets_search ? this.markets_search : "";
-      api.markets(search, 0, 25).then((Response) => {
-        this.markets_page = 0;
-        this.markets_pages = Response.pages;
-        this.markets = Response.data;
       });
     },
     getCategories() {
@@ -490,17 +446,6 @@ export default {
       api.currencies().then((Response) => {
         this.currencies = Response;
       });
-    },
-    scrollMarkets() {
-      let div = document.querySelector(".markets-scroll");
-      if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
-        if (this.markets_page < this.markets_pages - 1) {
-          api.markets(this.markets_page + 1, 25).then((Response) => {
-            this.markets_page = Response.current_page;
-            this.markets = this.markets.concat(Response.data);
-          });
-        }
-      }
     },
     scrollCategories() {
       let div = document.querySelector(".categories-scroll");

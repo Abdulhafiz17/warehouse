@@ -139,7 +139,7 @@ export default {
         });
     },
     getParties() {
-      api.parties(true, 0, 25).then((Response) => {
+      api.parties(true, this.$route.params.id, 0, 25).then((Response) => {
         this.parties = Response;
       });
     },
@@ -148,7 +148,12 @@ export default {
       if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
         if (this.parties?.current_page < this.parties?.pages - 1) {
           api
-            .parties(true, this.parties?.current_page + 1, 25)
+            .parties(
+              true,
+              this.$route.params.id,
+              this.parties?.current_page + 1,
+              25
+            )
             .then((Response) => {
               this.parties.current_page = Response.current_page;
               this.parties.data = this.parties?.data.concat(Response.data);

@@ -312,11 +312,14 @@ export function partyExpenses(party_id, page, limit) {
 
 // party
 
-export function parties(status, page, limit) {
-  return api(`get_parties?status=${status}&page=${page}&limit=${limit}`, "get");
+export function parties(status, market_id, page, limit) {
+  return api(
+    `get_parties?status=${status}&market_id=${market_id}&page=${page}&limit=${limit}`,
+    "get"
+  );
 }
-export function createParty() {
-  return api(`create_party`, "post");
+export function createParty(market_id) {
+  return api(`create_party/${market_id}`, "post");
 }
 export function confirmationParty(data) {
   return api(`confirmation_party`, "put", data);
