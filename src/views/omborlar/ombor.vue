@@ -221,7 +221,7 @@
                 <thead>
                   <tr>
                     <th>Partiya</th>
-                    <th>Ta'minotchi</th>
+                    <th>Hamkor</th>
                     <th>Kategoriya</th>
                     <th>Brend</th>
                     <th>Nomi</th>

@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Ta'minotchilar</h3>
+            <h3>Hamkorlar</h3>
           </div>
           <div class="col-md-4">
             <input
@@ -22,7 +22,7 @@
               block="true"
               data-toggle="modal"
               data-target="#add-market"
-              >Ta'minotchi qo'shish</btn
+              >Hamkor qo'shish</btn
             >
           </div>
         </div>
@@ -121,7 +121,7 @@
 
   <modal id="add-market">
     <template #header>
-      <h4>Ta'minotchi qo'shish</h4>
+      <h4>Hamkor qo'shish</h4>
     </template>
     <template #body>
       <form id="add-form" @submit.prevent="postMarket(add)">
@@ -180,7 +180,7 @@
 
   <modal id="edit-market">
     <template #header>
-      <h4>Ta'minotchini tahrirlash</h4>
+      <h4>Hamkorni tahrirlash</h4>
     </template>
     <template #body>
       <form id="edit-form" @submit.prevent="putMarket(edit)">
@@ -239,7 +239,7 @@
 
   <modal id="pay-to-market">
     <template #header>
-      <h4>Ta'minotchiga pul berish</h4>
+      <h4>Hamkorga pul berish</h4>
     </template>
     <template #body>
       <form id="pay-form" @submit.prevent="payToMarket(pay)">

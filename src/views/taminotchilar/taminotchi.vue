@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Ta'minotchi {{ market?.name }}</h3>
+            <h3>Hamkor {{ market?.name }}</h3>
           </div>
           <div class="col-md-4"></div>
           <div class="col-md-4"></div>

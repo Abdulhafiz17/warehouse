@@ -35,13 +35,6 @@ export default {
     buttonColor() {
       return this.colors[this.$props.color];
     },
-    text_color() {
-      return this.$props.textColor
-        ? this.colors[this.$props.color]
-        : this.mode == "dark"
-        ? this.colors["white"]
-        : this.colors["black"];
-    },
     is_block() {
       return this.$props.block ? "100%" : "auto";
     },
@@ -55,7 +48,6 @@ button {
   padding: 5px 10px;
   border: 1px solid v-bind(buttonColor);
   border-radius: 10px;
-  color: v-bind(text_color);
   background: white;
   box-shadow: inset 0 0 5px -1px v-bind(buttonColor),
     0 5px 10px -5px v-bind(buttonColor);

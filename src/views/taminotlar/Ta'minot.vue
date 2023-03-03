@@ -8,7 +8,7 @@
         data-target="#addMarket"
         v-if="supply_status == 'false'"
       >
-        <i class="fa fa-plus" /> Ta'minotchi qo'shish
+        <i class="fa fa-plus" /> Hamkor qo'shish
       </button>
     </div>
     <div class="col-md-4 my-1"></div>
@@ -42,7 +42,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4>Ta'minotchi qo'shish</h4>
+          <h4>Hamkor qo'shish</h4>
         </div>
         <form @submit.prevent="addMarket(new_market)">
           <div class="modal-body">

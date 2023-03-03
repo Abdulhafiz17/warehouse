@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Omborlar</h3>
+            <h3>Ostatka</h3>
           </div>
           <!-- <div class="col-md-4" v-if="!creatable"></div> -->
           <div class="col-md-4">
@@ -38,11 +38,11 @@
         <card color="green">
           <ul>
             <li>
-              <span class="material-symbols-outlined"> person </span>
+              <i class="fa fa-user"></i>
               <span>{{ item.name }}</span>
             </li>
             <li>
-              <span class="material-symbols-outlined"> location_on </span>
+              <i class="fa fa-location-dot"></i>
               <span>{{ item.address }}</span>
             </li>
           </ul>

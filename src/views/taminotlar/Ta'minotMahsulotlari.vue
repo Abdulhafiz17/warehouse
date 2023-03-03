@@ -15,7 +15,7 @@
       <table class="table table-sm table-hover">
         <thead>
           <tr>
-            <th>Ta'minotchi</th>
+            <th>Hamkor</th>
             <th>Kategoriya</th>
             <th>Brend</th>
             <th>Nomi</th>
@@ -90,7 +90,7 @@
               data-toggle="dropdown"
               @click="getMarkets()"
             >
-              {{ market ? market.name : "Ta'minotchi" }}
+              {{ market ? market.name : "Hamkor" }}
             </btn>
             <div
               class="dropdown-menu w-100 mt-1"
@@ -310,7 +310,7 @@
               data-toggle="dropdown"
               @click="getMarkets()"
             >
-              {{ supplies_market ? supplies_market.name : "Ta'minotchi" }}
+              {{ supplies_market ? supplies_market.name : "Hamkor" }}
             </btn>
             <div
               class="dropdown-menu w-100 mt-1"

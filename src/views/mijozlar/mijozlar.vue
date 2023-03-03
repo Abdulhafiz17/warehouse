@@ -4,7 +4,7 @@
       <card color="green">
         <div class="row">
           <div class="col-md-4 text-start">
-            <h3>Mijozlar</h3>
+            <h3>Magazinlar</h3>
           </div>
           <div class="col-md-4">
             <input
@@ -22,7 +22,7 @@
               block="true"
               data-toggle="modal"
               data-target="#add-shop"
-              >Mijoz qo'shish</btn
+              >Magazin qo'shish</btn
             >
           </div>
         </div>
@@ -36,15 +36,15 @@
         <card color="green">
           <ul>
             <li>
-              <span class="material-symbols-outlined"> person </span>
+              <i class="fa fa-user"></i>
               <strong>{{ item.name }}</strong>
             </li>
             <li>
-              <span class="material-symbols-outlined"> call </span>
+              <i class="fa fa-phone"></i>
               <a :href="`tel:+998${item.phone}`">{{ "+998" + item.phone }}</a>
             </li>
             <li>
-              <span class="material-symbols-outlined"> location_on </span>
+              <i class="fa fa-location-dot"></i>
               <span>{{ item.address }}</span>
             </li>
             <li>
@@ -125,7 +125,7 @@
 
   <modal id="add-shop">
     <template #header>
-      <h4>Mijoz qo'shish</h4>
+      <h4>Magazin qo'shish</h4>
     </template>
     <template #body>
       <form id="add-form" @submit.prevent="postShop(add)">
@@ -184,7 +184,7 @@
 
   <modal id="edit-shop">
     <template #header>
-      <h4>Mijoz tahrirlash</h4>
+      <h4>Magazin tahrirlash</h4>
     </template>
     <template #body>
       <form id="edit-form" @submit.prevent="putShop(edit)">

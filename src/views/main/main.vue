@@ -19,21 +19,21 @@ export default {
     return {
       links: [
         { path: "/hisobotlar", icon: "fa-chart-line", title: "Hisobotlar" },
-        { path: "/omborlar", icon: "fa-warehouse", title: "Omborlar" },
-        {
-          path: "/taminotlar",
-          icon: "fa-truck",
-          title: "Ta'minotlar",
-        },
+        { path: "/omborlar", icon: "fa-warehouse", title: "Ostatka" },
+        // {
+        //   path: "/taminotlar",
+        //   icon: "fa-truck",
+        //   title: "Ta'minotlar",
+        // },
         {
           path: "/taminotchilar",
           icon: "fa-truck-loading",
-          title: "Ta'minotchilar",
+          title: "Hamkorlar",
         },
         {
           path: "/mijozlar",
           icon: "fa-handshake",
-          title: "Mijozlar",
+          title: "Magazinlar",
         },
         {
           path: "/hodimlar",
