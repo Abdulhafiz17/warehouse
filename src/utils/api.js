@@ -332,14 +332,13 @@ export function partyBalance(party_id) {
 
 export function supplies(
   market_id,
-  party_id,
   warehouse_id,
   warehouse_product_id,
   page,
   limit
 ) {
   return api(
-    `get_supplies?market_id=${market_id}&party_id=${party_id}&warehouse_id=${warehouse_id}&w_p_id=${warehouse_product_id}&page=${page}&limit=${limit}`,
+    `get_supplies?market_id=${market_id}&warehouse_id=${warehouse_id}&w_p_id=${warehouse_product_id}&page=${page}&limit=${limit}`,
     "get"
   );
 }

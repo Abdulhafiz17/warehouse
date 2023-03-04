@@ -1,10 +1,237 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3 mb-1">
+      <div class="dropdown">
+        <btn
+          id="dropdownMenuButtonWarehouses"
+          type="button"
+          block="true"
+          color="green"
+          class="dropdown-toggle"
+          data-toggle="dropdown"
+        >
+          {{ warehouse ? warehouse?.name : "Ombor" }}
+        </btn>
+        <div
+          class="dropdown-menu w-100 mt-1"
+          aria-labelledby="dropdownMenuButtonWarehouses"
+        >
+          <ul class="responsive-y categories-scroll" style="max-height: 20vh">
+            <li
+              v-for="item in warehouses"
+              :key="item"
+              @click="warehouse = item"
+            >
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="dropdown">
+        <input
+          type="text"
+          color="green"
+          class="form-control"
+          placeholder="kategoriya"
+          data-toggle="dropdown"
+          v-model="category"
+          @keyup="getCategories()"
+          @click="getCategories()"
+        />
+        <div
+          class="dropdown-menu w-100 mt-1"
+          aria-labelledby="dropdownMenuButtonCategories"
+        >
+          <ul
+            class="responsive-y categories-scroll"
+            style="max-height: 20vh"
+            @scroll="scrollCategories()"
+          >
+            <li
+              v-for="item in categories"
+              :key="item"
+              @click="
+                category = item.name;
+                brand = '';
+              "
+            >
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="dropdown">
+        <input
+          type="text"
+          color="green"
+          class="form-control"
+          placeholder="brend"
+          data-toggle="dropdown"
+          v-model="brand"
+          @keyup="getBrands()"
+          @click="getBrands()"
+        />
+        <div
+          class="dropdown-menu w-100 mt-1"
+          aria-labelledby="dropdownMenuButtonCategories"
+        >
+          <ul
+            class="responsive-y brands-scroll"
+            style="max-height: 20vh"
+            @scroll="scrollBrands()"
+          >
+            <li v-for="item in brands" :key="item" @click="brand = item.name">
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="input-group">
+        <input
+          type="number"
+          min="0"
+          step="any"
+          color="green"
+          class="form-control"
+          placeholder="miqdori"
+          required
+          v-model="new_supply.quantity"
+        />
+        <div class="input-group-text">dona</div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="input-group">
+        <input
+          type="number"
+          min="0"
+          step="any"
+          color="green"
+          class="form-control"
+          placeholder="narx"
+          required
+          v-model="new_supply.price"
+        />
+        <div class="input-group-append">
+          <div class="dropdown">
+            <btn
+              id="dropdownMenuButtonCategories"
+              type="button"
+              color="green"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              @click="getCurrencies()"
+            >
+              {{ currency ? currency.currency : "valyuta" }}
+            </btn>
+            <div
+              class="dropdown-menu w-100 mt-1"
+              aria-labelledby="dropdownMenuButtonCategories"
+            >
+              <ul class="responsive-y" style="max-height: 20vh">
+                <li
+                  v-for="item in currencies"
+                  :key="item"
+                  @click="currency = item"
+                >
+                  {{ item.currency }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="input-group">
+        <input
+          type="number"
+          min="0"
+          step="any"
+          color="green"
+          class="form-control"
+          placeholder="chiqim"
+          required
+          v-model="new_supply.expense_price"
+        />
+        <div class="input-group-text">
+          {{ currency ? currency.currency : "valyuta" }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <div class="input-group">
+        <input
+          type="number"
+          min="0"
+          step="any"
+          color="green"
+          class="form-control"
+          placeholder="sotuv narx"
+          required
+          v-model="new_supply.trade_price"
+        />
+        <div class="input-group-append">
+          <div class="dropdown">
+            <btn
+              id="dropdownMenuButtonCategories"
+              type="button"
+              color="green"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              @click="getCurrencies()"
+            >
+              {{ trade_currency ? trade_currency.currency : "valyuta" }}
+            </btn>
+            <div
+              class="dropdown-menu w-100 mt-1"
+              aria-labelledby="dropdownMenuButtonCategories"
+            >
+              <ul class="responsive-y" style="max-height: 20vh">
+                <li
+                  v-for="item in currencies"
+                  :key="item"
+                  @click="trade_currency = item"
+                >
+                  {{ item.currency }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-1">
+      <btn
+        block="true"
+        color="green"
+        :disabled="
+          !category ||
+          !brand ||
+          !new_supply.quantity ||
+          !new_supply.price ||
+          !currency ||
+          !new_supply.trade_price ||
+          !trade_currency ||
+          !new_supply.expense_price ||
+          !warehouse
+        "
+        @click="addSupply(new_supply)"
+      >
+        <i class="fa fa-plus"></i> Qo'shish
+      </btn>
+    </div>
+    <!-- <div class="col-md-12">
       <btn class="float-right" data-toggle="modal" data-target="#addProduct">
         <i class="fa fa-cart-plus" /> Mahsulot qo'shish
       </btn>
-    </div>
+    </div> -->
   </div>
 
   <div class="responsive-y mt-2" style="height: 60vh">
@@ -14,7 +241,6 @@
           <tr>
             <th>Kategoriya</th>
             <th>Brend</th>
-            <th>Nomi</th>
             <th>Miqdor</th>
             <th>Narx</th>
             <th>Summa</th>
@@ -29,9 +255,6 @@
           <tr v-for="item in supplies" :key="item">
             <td>{{ item.brand.category.name }}</td>
             <td>{{ item.brand.name }}</td>
-            <td>
-              {{ item.name }}
-            </td>
             <td>
               {{ item.quantity + " dona" }}
             </td>
@@ -318,15 +541,13 @@ import * as api from "../../utils/api";
 import Pagination from "../../components/pagination/pagination.vue";
 export default {
   name: "Products",
-  props: {
-    party: { required: true },
-  },
-  emits: ["getBalance"],
   components: { Pagination },
   data() {
     return {
       _: Intl.NumberFormat(),
       supply_status: localStorage.supply_status,
+      warehouse: null,
+      warehouses: [],
       category_search: "",
       categories_page: 0,
       categories_pages: 1,
@@ -342,6 +563,7 @@ export default {
       types: [],
       currencies: [],
       currency: null,
+      trade_currency: null,
       units: ["dona", "kg", "litr", "metr"],
       supplies_page: 0,
       supplies_pages: 1,
@@ -354,8 +576,11 @@ export default {
         quantity: null,
         price: null,
         currency_id: null,
-        market_id: null,
-        party_id: this.$route.params.id,
+        trade_price: null,
+        trade_currency_id: null,
+        expense_price: null,
+        market_id: this.$route.params.id,
+        warehouse_id: null,
       },
       confirmation_party: {
         party_id: this.$route.params.id,
@@ -371,32 +596,31 @@ export default {
     },
   },
   created() {
-    if (this.party_id) {
-      this.getSupplies(0, 25);
-    }
+    this.getSupplies(0, 25);
+    this.getWarehouses();
   },
   methods: {
     getSupplies(page, limit) {
       api
-        .supplies(this.$route.params.id, this.party_id, 0, 0, page, limit)
+        .supplies(this.$route.params.id, 0, 0, page, limit)
         .then((Response) => {
           this.supplies_page = Response.current_page;
           this.supplies_pages = Response.pages;
           this.supplies_limit = Response.limit;
           this.supplies = Response.data;
-          this.$emit("getBalance");
         });
     },
     addSupply(supply) {
-      supply.market_id = this.$route.params.id;
       supply.category_name = this.category;
       supply.brand_name = this.brand;
       supply.currency_id = this.currency.id;
-      supply.party_id = this.party_id;
+      supply.trade_currency_id = this.trade_currency.id;
+      supply.warehouse_id = this.warehouse.id;
       api.takeSupply(supply).then((Response) => {
         api.success("close-add-supply").then(() => {
-          this.category = "";
+          this.brand = null;
           this.currency = null;
+          this.trade_currency = null;
           this.new_supply = {
             category_name: "",
             brand_name: "",
@@ -404,8 +628,11 @@ export default {
             quantity: null,
             price: null,
             currency_id: null,
-            market_id: null,
-            party_id: this.party_id,
+            trade_price: null,
+            trade_currency_id: null,
+            expense_price: null,
+            market_id: this.$route.params.id,
+            warehouse_id: null,
           };
           this.getSupplies(0, 25);
         });
@@ -416,6 +643,12 @@ export default {
         api.success().then(() => {
           this.getSupplies(0, 25);
         });
+      });
+    },
+    getWarehouses() {
+      api.warehouses("").then((val) => {
+        this.warehouses = val;
+        this.warehouse = this.warehouses[0];
       });
     },
     getCategories() {
