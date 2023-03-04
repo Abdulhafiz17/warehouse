@@ -234,7 +234,7 @@
     </div> -->
   </div>
 
-  <div class="responsive-y mt-2" style="height: 60vh">
+  <div class="responsive-y mt-2" style="height: 71vh">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
@@ -478,7 +478,7 @@
     </template>
   </modal>
 
-  <!-- <modal id="filter" size="sm">
+  <modal id="filter" size="sm">
     <template #header>
       <h4>Qidiruv</h4>
     </template>
@@ -533,7 +533,7 @@
         <i class="fa fa-trash" />
       </btn>
     </template>
-  </modal> -->
+  </modal>
 </template>
 
 <script>
