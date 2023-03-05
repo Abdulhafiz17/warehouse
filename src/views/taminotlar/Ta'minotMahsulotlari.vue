@@ -243,6 +243,7 @@
             <th>Brend</th>
             <th>Miqdor</th>
             <th>Narx</th>
+            <th>Chiqim</th>
             <th>Summa</th>
             <th>
               <!-- <btn color="cyan" data-toggle="modal" data-target="#filter">
@@ -259,6 +260,13 @@
               {{ item.quantity + " dona" }}
             </td>
             <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
+            <td>
+              {{
+                _.format(item.added_expense_price) +
+                " " +
+                item.currency.currency
+              }}
+            </td>
             <td>
               {{
                 _.format(item.price * item.quantity) +
