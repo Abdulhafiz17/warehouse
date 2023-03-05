@@ -230,6 +230,8 @@
                     <td>{{ item.quantity + " dona" }}</td>
                     <td>
                       {{ _.format(item.price) + " " + item.currency.currency }}
+                    </td>
+                    <td>
                       {{
                         _.format(item.added_expense_price) +
                         " " +
