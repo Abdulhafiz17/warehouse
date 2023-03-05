@@ -8,6 +8,7 @@
             <th>Brend</th>
             <th>Miqdor</th>
             <th>Narx</th>
+            <th>Chiqim</th>
             <th>Summa</th>
           </tr>
         </thead>
@@ -17,6 +18,13 @@
             <td>{{ item.brand.name }}</td>
             <td>{{ item.quantity + " dona" }}</td>
             <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
+            <td>
+              {{
+                _.format(item.added_expense_price) +
+                " " +
+                item.currency.currency
+              }}
+            </td>
             <td>
               {{
                 _.format(item.price * item.quantity) +

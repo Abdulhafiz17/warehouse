@@ -23,17 +23,16 @@
   </div>
 
   <card color="green">
-    <div class="table-responsive">
+    <div class="table-responsive" style="max-height: 84vh">
       <table class="table table-sm table-hover">
         <thead>
           <tr>
             <th>№</th>
             <th>Kategoriya</th>
             <th>Brend</th>
-            <th>Nomi</th>
             <th>Qoldiq</th>
             <th>Narx</th>
-            <th>Tan narx</th>
+            <th>Chiqim</th>
             <th>Sotuv narx</th>
             <th>
               <btn color="cyan" data-toggle="modal" data-target="#filter">
@@ -55,7 +54,6 @@
             </td>
             <td>{{ item.Warehouse_products.brand.category.name }}</td>
             <td>{{ item.Warehouse_products.brand.name }}</td>
-            <td>{{ item.Warehouse_products.name }}</td>
             <td>{{ item.sum_quantity + " dona" }}</td>
             <td>
               {{
@@ -66,9 +64,9 @@
             </td>
             <td>
               {{
-                _.format(item.Warehouse_products.tan_narx) +
+                _.format(item.Warehouse_products.added_expense_price) +
                 " " +
-                item.tan_narx_currency
+                item.Warehouse_products.currency.currency
               }}
             </td>
             <td>
@@ -174,12 +172,6 @@
     <template #body>
       <div class="row gap-2">
         <div class="col-12">
-          <select color="green" class="form-select" v-model="status">
-            <option value="false">Narx belgilanmagan</option>
-            <option value="true">Narx belgilangan</option>
-          </select>
-        </div>
-        <div class="col-12">
           <select color="green" class="form-select" v-model="quantity">
             <option value="true">Qoldiqli</option>
             <option value="false">Qoldiq qugagan</option>
@@ -220,27 +212,29 @@
               <table class="table table-sm table-hover">
                 <thead>
                   <tr>
-                    <th>Partiya</th>
                     <th>Hamkor</th>
                     <th>Kategoriya</th>
                     <th>Brend</th>
-                    <th>Nomi</th>
                     <th>Miqdor</th>
                     <th>Narx</th>
+                    <th>Chiqim</th>
                     <th>Summa</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in supplies?.data" :key="item">
-                    <td>{{ item.party.id }}</td>
                     <td>{{ item.market.name }}</td>
                     <td>{{ item.brand.category.name }}</td>
                     <td>{{ item.brand.name }}</td>
-                    <td>{{ item.name }}</td>
                     <td>{{ item.quantity + " dona" }}</td>
                     <td>
                       {{ _.format(item.price) + " " + item.currency.currency }}
+                      {{
+                        _.format(item.added_expense_price) +
+                        " " +
+                        item.currency.currency
+                      }}
                     </td>
                     <td>
                       {{
@@ -350,7 +344,6 @@ export default {
       warehouse: null,
       search: "",
       warehouse_id: this.$route.params.id,
-      status: "false",
       quantity: "true",
       products: null,
       currencies: [],
@@ -391,7 +384,6 @@ export default {
         .warehouseProducts(
           this.warehouse_id,
           this.search,
-          this.status,
           this.quantity,
           page,
           limit
@@ -403,7 +395,6 @@ export default {
     getSupplies(page, limit, next) {
       api
         .supplies(
-          0,
           0,
           this.$route.params.id,
           this.product.Warehouse_products.id,

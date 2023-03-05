@@ -115,22 +115,13 @@ export function updateWarehouse(data) {
 
 // product
 
-export function warehouseProducts(
-  warehouse_id,
-  search,
-  status,
-  quantity,
-  page,
-  limit
-) {
+export function warehouseProducts(warehouse_id, search, quantity, page, limit) {
   let search_query = ``;
   if (search) search_query = `&search=${search}`;
-  let status_query = ``;
-  if (status) status_query = `&status=${status}`;
   let quantity_query = ``;
   if (quantity) quantity_query = `&quantity=${quantity}`;
   return api(
-    `get_warehouse_products?warehouse_id=${warehouse_id}${search_query}${status_query}${quantity_query}&page=${page}&limit=${limit}`,
+    `get_warehouse_products?warehouse_id=${warehouse_id}${search_query}${quantity_query}&page=${page}&limit=${limit}`,
     "get"
   );
 }

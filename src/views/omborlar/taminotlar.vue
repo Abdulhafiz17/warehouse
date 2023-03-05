@@ -4,13 +4,13 @@
       <table class="table table-sm table-hover">
         <thead>
           <tr>
-            <th>Partiya</th>
             <th>Ta'minotchi</th>
             <th>Kategoriya</th>
             <th>Brend</th>
             <th>Nomi</th>
             <th>Miqdor</th>
             <th>Narx</th>
+            <th>Chiqim</th>
             <th>Summa</th>
             <th>
               <btn color="cyan" data-toggle="modal" data-target="#filter">
@@ -21,13 +21,19 @@
         </thead>
         <tbody>
           <tr v-for="item in data?.data" :key="item">
-            <td>{{ item.party.id }}</td>
             <td>{{ item.market.name }}</td>
             <td>{{ item.brand.category.name }}</td>
             <td>{{ item.brand.name }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.quantity + " dona" }}</td>
             <td>{{ _.format(item.price) + " " + item.currency.currency }}</td>
+            <td>
+              {{
+                _.format(item.added_expense_price) +
+                " " +
+                item.currency.currency
+              }}
+            </td>
             <td>
               {{
                 _.format(item.price * item.quantity) +
@@ -133,7 +139,7 @@ export default {
     get(page, limit) {
       let market_id = this.market ? this.market.id : 0;
       api
-        .supplies(market_id, 0, this.$route.params.id, 0, page, limit)
+        .supplies(market_id, this.$route.params.id, 0, page, limit)
         .then((val) => {
           this.data = val;
         });

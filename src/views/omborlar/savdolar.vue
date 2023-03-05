@@ -7,7 +7,6 @@
             <th>Buyurtma id</th>
             <th>Kategoriya</th>
             <th>Brend</th>
-            <th>Nomi</th>
             <th>Miqdor</th>
             <th>Narx</th>
             <th>Summa</th>
@@ -23,9 +22,6 @@
             </td>
             <td>
               {{ item.Trades.warehouse_product.brand.name }}
-            </td>
-            <td>
-              {{ item.Trades.warehouse_product.name }}
             </td>
             <td>
               {{ item.Trades.quantity + " dona" }}
