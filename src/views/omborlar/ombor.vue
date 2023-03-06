@@ -166,7 +166,7 @@
         <div class="col-12">
           <select color="green" class="form-select" v-model="quantity">
             <option value="true">Qoldiqli</option>
-            <option value="false">Qoldiq qugagan</option>
+            <option value="false">Qoldiq tugagan</option>
           </select>
         </div>
       </div>
@@ -211,7 +211,7 @@
                     <th>Narx</th>
                     <th>Chiqim</th>
                     <th>Summa</th>
-                    <th></th>
+                    <th>Sana</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -237,7 +237,7 @@
                         item.currency.currency
                       }}
                     </td>
-                    <td></td>
+                    <td>{{ item.time.replace("T", " ") }}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -265,10 +265,10 @@
                     <th>Buyurtma id</th>
                     <th>Kategoriya</th>
                     <th>Brend</th>
-                    <th>Nomi</th>
                     <th>Miqdor</th>
                     <th>Narx</th>
                     <th>Summa</th>
+                    <!-- <th>Sana</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -281,9 +281,6 @@
                     </td>
                     <td>
                       {{ item.Trades.warehouse_product.brand.name }}
-                    </td>
-                    <td>
-                      {{ item.Trades.warehouse_product.name }}
                     </td>
                     <td>
                       {{ item.Trades.quantity + " dona" }}
@@ -302,6 +299,7 @@
                         item.Trades.currency.currency
                       }}
                     </td>
+                    <!-- <td>{{ item.Trades.time.replace("T", " ") }}</td> -->
                   </tr>
                 </tbody>
                 <tfoot>
