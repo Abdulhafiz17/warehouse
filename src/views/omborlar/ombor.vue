@@ -32,7 +32,6 @@
             <th>Brend</th>
             <th>Qoldiq</th>
             <th>Narx</th>
-            <th>Chiqim</th>
             <th>Sotuv narx</th>
             <th>
               <btn color="cyan" data-toggle="modal" data-target="#filter">
@@ -58,13 +57,6 @@
             <td>
               {{
                 _.format(item.Warehouse_products.price) +
-                " " +
-                item.Warehouse_products.currency.currency
-              }}
-            </td>
-            <td>
-              {{
-                _.format(item.Warehouse_products.added_expense_price) +
                 " " +
                 item.Warehouse_products.currency.currency
               }}
