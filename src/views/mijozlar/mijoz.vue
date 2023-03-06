@@ -310,7 +310,7 @@ export default {
     },
     getProducts(page, limit, next) {
       api
-        .warehouseProducts(this.warehouse_id, this.search, "true", "true", page, limit)
+        .warehouseProducts(this.warehouse_id, this.search, "true", page, limit)
         .then((val) => {
           this.products = val;
           if (next) this.getTrades(0, 25);
