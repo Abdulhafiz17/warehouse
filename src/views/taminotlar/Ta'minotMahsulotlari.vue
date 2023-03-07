@@ -126,7 +126,6 @@
               color="green"
               class="dropdown-toggle"
               data-toggle="dropdown"
-              @click="getCurrencies()"
             >
               {{ currency ? currency.currency : "valyuta" }}
             </btn>
@@ -185,7 +184,6 @@
               color="green"
               class="dropdown-toggle"
               data-toggle="dropdown"
-              @click="getCurrencies()"
             >
               {{ trade_currency ? trade_currency.currency : "valyuta" }}
             </btn>
@@ -606,6 +604,7 @@ export default {
   created() {
     this.getSupplies(0, 25);
     this.getWarehouses();
+    this.getCurrencies();
   },
   methods: {
     getSupplies(page, limit) {
@@ -686,6 +685,8 @@ export default {
     getCurrencies() {
       api.currencies().then((Response) => {
         this.currencies = Response;
+        this.currency = this.currencies[0];
+        this.trade_currency = this.currencies[0];
       });
     },
     scrollCategories() {
