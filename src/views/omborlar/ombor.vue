@@ -31,7 +31,6 @@
             <th>Kategoriya</th>
             <th>Brend</th>
             <th>Qoldiq</th>
-            <th>Tan narx</th>
             <th>Sotuv narx</th>
             <th>
               <btn color="cyan" data-toggle="modal" data-target="#filter">
@@ -54,13 +53,6 @@
             <td>{{ item.Warehouse_products.brand.category.name }}</td>
             <td>{{ item.Warehouse_products.brand.name }}</td>
             <td>{{ item.sum_quantity + " dona" }}</td>
-            <td>
-              {{
-                _.format(item.Warehouse_products.tan_narx) +
-                " " +
-                item.tan_narx_currency
-              }}
-            </td>
             <td>
               {{
                 _.format(item.Warehouse_products.trade_price) +
